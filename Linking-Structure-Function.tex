@@ -760,8 +760,8 @@ The goals of this study were to: 1) develop a method that can generate morpholog
 In Section~\ref{sec:validation}, we validated the models against experimental data.
 Figure~\ref{fig:OCTAValidation} showed good agreement with OCTA data for all three layers in terms of VAD, which was used for the development of the method.
 Additionally, IVD, FD, VPI and VSD in the SVC were also consistent with literature values~\cite{Chu2016,Ma2021,Liu_2021}.
-While VPI values close to literature values ($\SI{14}{\percent}$ difference), VSD was \SI{35}{\percent} larger in the model.
-This could be attributed to an artefact raising from segmentation of the perimeter map in the work by \citet{Chu2016}.
+While VPI values were close to literature values ($\SI{14}{\percent}$ difference), VSD was \SI{35}{\percent} larger in the model.
+This could be attributed to an artefact rising from segmentation of the perimeter map in the work by \citet{Chu2016}.
 Indeed, the VSD they found is around \SI{16}{\percent} larger than half the VPI value, which is consistent with the discrepancy we found with our model.
 Besides, in the virtual populations, the unit is \SI{}{\micro\metre}, whereas in the literature, it is given as $\text{pixel}^{-1}$.
 We corrected this by converting the pixels using a \SI{5.7}{\micro\metre\per\text{pixel}} conversion factor~\cite{Spectralis}.
@@ -769,7 +769,7 @@ The right conversion factor is difficult to estimate since resolution may vary b
 Furthermore, capillaries in the macula are close in diameter to the resolution of standard OCTA~\cite{Chu2016}, which might lead to overestimates of vessel area.
 This could also explain the differences, some large, in VCI, VDI, VSD and IVD if we calibrated the hyper-parameters based on a false value of VAD, leading to an unnaturally dense vasculature.
 
-The morphology of the ICP and DCP vasculature was very homogeneous across the generated cohort, as indicated by the small standard deviations in Figure~\ref{fig:OCTAValidation}.
+The morphology of the ICP and DCP vasculature was very homogeneous across the generated cohort, as indicated by the narrow inter-quartile ranges in Figure~\ref{fig:OCTAValidation}.
 As demonstrated by the sensitivity analysis, this may be resolved by varying $N_{seeds}$, though reasonable bounds need to be defined.
 
 Figure~\ref{fig:Horton_Strahler} showed that the model's distribution of diameters across Horton-Strahler order was similar to experimental data~\cite{An2020}.
