@@ -215,7 +215,7 @@ model.
   \end{subfigure}
 
   \caption{Architecture of the retina. (\textbf{A}) Landmarks of the retina on a \SI{45}{\degree} field-of-view colour fundus photograph from the DRIVE data-set~\cite{Staal_2004}.
-  (\textbf{B}) The three capillary layers of the macula imaged with histology. Image taken from the work of~\citet{An2020} with permission.}
+  (\textbf{B}) The three capillary layers of the macula imaged with histology. Image from the work of~\citet{An2020}, available under a CC BY-NC-ND license.}
   \label{fig:1}
 \end{figure}
 
@@ -673,7 +673,7 @@ Additionally, these studies reported volumetric blood flow rates against diamete
   \caption{\label{fig:Flow-Velocity-dist}Blood velocity (\textbf{A}) and volumetric blood flow rate (\textbf{B}) distributions against vessel diameter in the virtual vasculatures compared with two independent experimental studies\cite{DoblhoffDier2014,Riva1985}.}
 \end{figure}
 
-\subsection{Linking structure and function}\label{sec:StructureAndFunction}
+\subsection{Four structural variables are strongly linked to retinal function}\label{sec:StructureAndFunction}
 
 We next look to understand how the morphology of the macular vasculature affects the haemodynamics of the retina and of the macula using our model.
 Figure~\ref{fig:SpearmanCorrelations} shows the Spearman correlation coefficients for each variables.
@@ -689,7 +689,7 @@ The correlations with the macula flow ratio were all below \SI{0.25}, indicating
 
 \subsection{Sensitivity analysis and uncertainty quantification}\label{sec:gsaUQ}
 
-\subsubsection{Sensitivity analysis of the structural model}\label{sec:gsa}
+\subsubsection{Minimum branching angle dominates structural variability}\label{sec:gsa}
 
 Figure~\ref{fig:gsa}A shows the Sobol indices for \SI{10}{} hyper-parameters, computed with the python library SALib\cite{Iwanaga_2022,Herman_2017} using $\SI{11000}{}$ simulations.
 The parameters were sampled uniformly within the ranges presented in Table~\ref{tab:MonteCarloSamplingRanges} using the algorithm by \citet{Saltelli2002}.
@@ -739,7 +739,7 @@ These results indicate that those four parameters are enough to produce a virtua
   \label{fig:gsa}
 \end{figure}
 
-\subsubsection{Uncertainty quantification of the haemodynamics model}\label{sec:UQ}
+\subsubsection{Macula flow ratio is independent of OPP}\label{sec:UQ}
 
 The results presented in Section~\ref{sec:results} rely on several hypotheses and parameters which introduce a degree of uncertainty.
 Across all scenarios, the mean retinal blood flow varied between \SI{-30.3}{\percent} and \SI{25.2}{\percent} of baseline values whereas macula flow ratio varied between \SI{-17.8}{\percent} and \SI{73.1}{\percent}.
@@ -802,7 +802,7 @@ Decreasing $\mathcal R$ has an opposite effect, however, the macula flow ratio w
 Indeed, in our model, for a given OPP, flow in the CRA is theoretically bounded by the radius and length of the CRA according to Equation~(\ref{eq:poiseuille}).
 The same effect explains the non-symmetrical changes in total retinal blood flow as $\mathcal R$ is decreased (see Figure~\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}). 
 
-\subsection{Retinal blood flow is associated with macular morphology}\label{sec:disc-results}
+\subsection{Associations between structure and function}\label{sec:disc-results}
 
 Analysis of the \SI{200}{} virtual vasculatures revealed associations between several of the morphological metrics and total retinal blood flow.
 In particular, larger VAD, VDI, and FD in the SVC were strongly associated with larger retinal blood flow.
