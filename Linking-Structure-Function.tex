@@ -71,7 +71,7 @@
 %   \and Wahbi K. El-Bouri\\ Department of Cardiovascular and Metabolic Medicine, University of Liverpool}
 
 \author[1,2]{R\'{e}mi Hernandez\footnote{E-mail address: remi.hernandez@liverpool.ac.uk (R\'{e}mi Hernandez)}}
-\author[3]{Savita Madhusudhan}
+\author[3,4]{Savita Madhusudhan}
 \author[3,4]{Yalin Zheng}
 \author[1,2]{Wahbi K. El-Bouri\footnote{E-mail address: w.el-bouri@liverpool.ac.uk (Wahbi K. El-Bouri)}}
 
@@ -87,20 +87,20 @@
 \maketitle
 
 \begin{abstract}
-  \textbf{Purpose:} We developed a framework to generate virtual vasculature of the retina, from the central retinal vessels down to the capillaries of the macula, alongside with a haemodynamics model which was used to test the associations between vascular morphology assessed by optical coherence tomography (OCTA) and retinal perfusion.
+  \textbf{Purpose:} We developed a framework to generate virtual vasculature of the retina, from the central retinal vessels down to the macular capillaries, alongside a haemodynamics model which was used to test the associations between vascular morphology as delineated by optical coherence tomography (OCTA) and retinal perfusion.
 
   \textbf{Methods:} The method to generate the vasculature is based on the distribution of four clinical parameters, constructive constrained optimisation (CCO) and Voronoi diagram.
-  Arterial and venous trees are generated in the temporal retina and connected through three layers of capillaries in the macula.
+  Arterial and venous trees are generated in the temporal retina and connected through three layers of capillaries at different depths in the macula.
   Morphology of the virtual vasculatures is compared with OCTA data.
-  Associations between total retinal blood flow and macula flow ratio and vascular morphology are derived as Spearman rank coefficients and uncertainty from input parameters quantified.
+  Associations between total retinal blood flow and macular flow ratio and vascular morphology are derived as Spearman rank coefficients and uncertainty from input parameters quantified.
   
   \textbf{Results:} A virtual cohort of \SI{200}{} healthy vasculatures were generated.
-  Several morphological metrics were in good agreement with literature values.
+  Several morphological metrics were in good agreement with pusblished values.
   Total retinal blood flow was strongly correlated with vessel area density (VAD), vessel diameter index (VDI), fractal dimension (FD) and vessel calibre index (VCI).
-  The macula flow ratio was not correlated with any morphological metrics.
+  The macular flow ratio was not correlated with any morphological metrics.
 
   \textbf{Conclusions:} The proposed framework is able to reproduce vascular networks in the macula that are morphologically and functionally similar to real vasculature.
-  The framework provides quantitative insights into how macular perfusion can be affected by changes in vascular morphology assessed on OCTA.
+  The framework provides quantitative insights into how macular perfusion can be affected by changes in vascular morphology delineated on OCTA.
     
 \end{abstract}
 
@@ -112,19 +112,15 @@
 %\linenumbers
 \section{Introduction}\label{introduction}
 
-The retina is a complex band of tissue at the back of the eye which plays a major role in visual function.
-It requires the close interplay between many cells and structures, including a complex vascular system~\cite{Hernandez2023}.
-As a result, the retina is sensitive to small changes which may lead to degradation of visual functions.
+The retina is a highly oxygen-dependant, complex band of tissue at the back of the eye which plays a key role in visual function.
+It requires close interplay between many different cell types and supporting structures, including a complex vascular system~\cite{Hernandez2023}.
+As a result, the retina is sensitive to small changes which may lead to loss of visual functions.
 \textit{In silico} modelling has the potential to offer insight into the complex interactions between the retinal environment and the underlying causes of retinal diseases.
 In particular virtual populations and \textit{in silico} clinical trials are a promising way to enhance basic research and clinical trials~\cite{Hernandez2023}.
-Optical coherence tomography angiography (OCTA) is an imaging modality
-that offers three dimensional, high resolution angiograms of the
-macula, which lies at the centre of the retina.
-Several microvascular metrics, such as vessel density and fractal dimension, have been suggested to quantify the
-quality of the microvasculature on OCTAs~\cite{Chu2016}.
-Using those metrics, several microvascular
-changes have been linked with ageing and diseased retinas\cite{Ma2021,Trinh_2019, Told2023}, but also with cerebrovascular changes and cardiovascular diseases~\cite{Pleouras_2021,Graff_2021,LopezCuenca_2022}.
-For the latter two, virtual populations have been developed, but there is yet to be similar work for the retinal vasculature or for the linked cerebral-retinal vasculature~\cite{Hernandez2023}.
+Optical coherence tomography angiography (OCTA) is a non-invasive, new imaging modality that offers three dimensional, high resolution angiograms of the macula, which is the central-most area of the retina.
+Several microvascular metrics, such as vessel density and fractal dimension, have been suggested to quantify the quality of the microvasculature on OCTAs~\cite{Chu2016}.
+Using those metrics, several microvascular changes have been linked with ageing and diseased retinae\cite{Ma2021,Trinh_2019, Told2023} and also with cerebrovascular changes and cardiovascular diseases~\cite{Pleouras_2021,Graff_2021,LopezCuenca_2022}.
+For the latter two, virtual populations have been developed, but similar work is yet to be done for the retinal vasculature or for the linked cerebral-retinal vasculature~\cite{Hernandez2023}.
 
 Such alterations to the retinal and choroidal vasculature are expected to negatively affect the perfusion of the retina.
 Ischaemia and hypoxia are likely involved in the pathogenesis of several retinal diseases, in
@@ -132,15 +128,15 @@ particular neovascular diseases such as neovascular age-related
 macular degeneration, proliferative diabetic retinopathy or retinal
 vein occlusion which are characterised by pathological growth of blood
 vessels through angiogenesis~\cite{Medina_2016}.
-Hypoxia is a known trigger of angiogenesis and targeting oxygen-induced angiogenic pathways might improve treatment outcomes~\cite{UsuiOuchi2020}.
+Hypoxia is a known trigger of angiogenesis and targeting ischemia-induced angiogenic pathways might improve treatment outcomes~\cite{UsuiOuchi2020}.
 
 However, owing to the difficulty of experimentally measuring oxygen
 levels in the retina, the role of hypoxia in the pathogenesis of
 neovascular diseases remains unclear. Furthermore, it also remains unclear
-how changes in microvascular metric computed on OCTAs relate with the
+how changes in microvascular metrics computed on OCTAs relate to the
 quality of blood perfusion. Computational models of the retina and its
 vasculature, combined with mathematical models of haemodynamics and
-oxygen transport, can help linking structure and function.
+oxygen transport, can help in linking structure and function.
 
 Retinal haemodynamics and oxygenation have received considerable
 attention from the modelling community in recent
@@ -172,7 +168,7 @@ experimental work has been done. As a result, most models are
 validated against the same data~\cite{DoblhoffDier2014,Riva1985}.
 
 This paper presents a framework for generating virtual populations of
-the microvasculature of the macula, using few clinical measurements as
+the microvasculature of the macula, using a few clinical measurements as
 inputs. The framework proposed in Section~\ref{sec:methods} includes a
 partial representation of the larger arteries and veins of the
 temporal retina, branching from the central retinal artery (CRA) and
@@ -182,7 +178,7 @@ haemodynamics model. In Section~\ref{sec:validation}, we add a layer
 of validation compared to other retinal haemodynamics models by
 comparing the microvascular structure of the model with OCTA
 metrics. In Section~\ref{sec:gsaUQ}, global sensitivity analysis
-techniques are applied to each aspects of the model to
+techniques are applied to each aspect of the model to
 quantify the uncertainty brought about by the uncertainty in clinical
 parameters and model hyper-parameters. Section~\ref{sec:discussion}
 contains a discussion of the results, while
@@ -246,9 +242,9 @@ This is because the ICP and DCP are composed of capillaries in the perifovea and
 Major temporal arcade vessels were manually segmented from the DRIVE data-set~\cite{Staal_2004}.
 The major temporal arcade vessels correspond to the four
 vessels (two veins, two arteries) that branch directly from the
-central retinal vessels and extend towards each temporal quadrants of
+central retinal vessels and extend towards the superotemporal and inferotemporal quadrants of 
 the retina (see Figure~\ref{fig:1} for an example of the temporal
-arcades).  Vessel centreline segmentation, from their branching at
+arcades).  Vessel centreline segmentations, from their branching at
 the level of the optic disc to the boundary of the visible retina,
 were extracted from 8 colour fundus photographs centred on the fovea.
 Images were excluded if the arteries and veins could not be
@@ -364,8 +360,8 @@ structure, with parent vessels giving rise to two daughter
 branches. The CCO algorithm follows this logic to create vascular
 trees.  At the micro scale, however, capillaries tend to form complex
 nets, forming loops and anastomoses~\cite{An2020} that are
-incompatible with the CCO’s logic. Therefore, we adopt the methodology
-proposed by~\cite{Linninger2013} to generate capillary beds connecting
+incompatible with the CCO’s logic.
+Therefore, we adopt the methodology proposed by~\citet{Linninger2013} to generate capillary beds connecting
 the arterial and venous trees.  In short, a disk the size of the
 macula (see Table~\ref{tab:parameters}) is meshed with a Delaunay
 triangulation generated from $N_{Seeds}$ randomly sampled points
@@ -567,7 +563,7 @@ In brief, capillaries are assigned an order of 0, then moving upstream for arter
 \item if the vessel has two or more branches of order $i$ and $i$ is the largest order among the branches, the order of the vessel is $i+1$.
 \end{itemize}
 
-From the haemodynamics simulations, two variables were extracted to quantify macular perfusion: `retinal blood flow', defined as the volumetric flow rate of blood entering the retina, and the `macula flow ratio' defined as the percentage of retinal blood flow entering the macula.
+From the haemodynamics simulations, two variables were extracted to quantify macular perfusion: `retinal blood flow', defined as the volumetric flow rate of blood entering the retina, and the `macular flow ratio' defined as the percentage of retinal blood flow entering the macula.
 Spearman correlation coefficients were calculated for both haemodynamics variable and against each morphological metric.
 We derive \SI{95}{\percent} confidence intervals using bootstrapping ($N=1000$).
 
@@ -647,7 +643,7 @@ Mean diameters were smaller in the model, but experimental data lay within the r
 The ratio of average arteriole diameter to average venule diameter increased from $\SI{0.91\pm 0.03}{}$
 in order 5 vessels to $\SI{0.96\pm0.01}{}$ in order 1 vessels, which is consistent with experimental measurements of $\SI{0.9\pm0.1}{}$~\cite{Goldenberg2013}.  
 
-From the haemodynamics simulations, the mean $\pm$ standard deviation for retinal blood flow, blood velocity in the CRA and macula flow ratio were $\SI[per-mode=symbol]{14.7 \pm 5.6}{\micro\litre\per\minute}$ (range: \SIrange[per-mode=symbol]{3.3}{40.4}{\micro\litre\per\minute}), $\SI[per-mode=symbol]{1.2 \pm 0.2}{\cm\per\second}$ (range: \SIrange[per-mode=symbol]{0.5}{2}{\cm\per\second}) and $\SI{18.4 \pm 3.5}{\percent}$ (ranges: \SIrange{12.0}{27.8}{\percent}).
+From the haemodynamics simulations, the mean $\pm$ standard deviation for retinal blood flow, blood velocity in the CRA and macular flow ratio were $\SI[per-mode=symbol]{14.7 \pm 5.6}{\micro\litre\per\minute}$ (range: \SIrange[per-mode=symbol]{3.3}{40.4}{\micro\litre\per\minute}), $\SI[per-mode=symbol]{1.2 \pm 0.2}{\cm\per\second}$ (range: \SIrange[per-mode=symbol]{0.5}{2}{\cm\per\second}) and $\SI{18.4 \pm 3.5}{\percent}$ (ranges: \SIrange{12.0}{27.8}{\percent}).
 On average, retinal blood flow in the model was lower compared to experimental studies which reported a mean of \SIrange{30}{40}{\micro\litre\per\minute}~\cite{DoblhoffDier2014,Riva1985}.
 Blood velocity in the central retinal artery was also lower in the model compared to the average of \SI{6.3}{\cm\per\second} reported by experimental work~\cite{Dorner2009}.
 Blood velocity along the vasculature is compared with experimental studies~\cite{DoblhoffDier2014,Riva1985} in Figure~\ref{fig:Flow-Velocity-dist}A.
@@ -679,7 +675,7 @@ We next look to understand how the morphology of the macular vasculature affects
 Figure~\ref{fig:SpearmanCorrelations} shows the Spearman correlation coefficients for each variables.
 Vertical lines show the threshold typically used for a correlation to be considered moderate (dotted lines) and strong (dashed lines).
 For the healthy virtual cohort, the model found VAD, VDI, VCI and FD of the SVP to be strong predictors of retinal blood flow, whereas VAD in the ICP and in the combined ICP-DCP complex were found to be moderate predictors.
-The correlations with the macula flow ratio were all below \SI{0.25}, indicating weak or no correlations.
+The correlations with the macular flow ratio were all below \SI{0.25}, indicating weak or no correlations.
 
 \begin{figure}[ht!]
   \centering
@@ -739,12 +735,12 @@ These results indicate that those four parameters are enough to produce a virtua
   \label{fig:gsa}
 \end{figure}
 
-\subsubsection{Macula flow ratio is independent of OPP}\label{sec:UQ}
+\subsubsection{macular flow ratio is independent of OPP}\label{sec:UQ}
 
 The results presented in Section~\ref{sec:results} rely on several hypotheses and parameters which introduce a degree of uncertainty.
-Across all scenarios, the mean retinal blood flow varied between \SI{-30.3}{\percent} and \SI{25.2}{\percent} of baseline values whereas macula flow ratio varied between \SI{-17.8}{\percent} and \SI{73.1}{\percent}.
+Across all scenarios, the mean retinal blood flow varied between \SI{-30.3}{\percent} and \SI{25.2}{\percent} of baseline values whereas macular flow ratio varied between \SI{-17.8}{\percent} and \SI{73.1}{\percent}.
 The results for each scenario tested are shown in Table~\ref{tab:sup-UQranges}.
-Variation in OPP had almost no effects on macula flow ratio (Pearson's $R^2<10^{-3}$ for all values of $\mathcal R$) but was linearly correlated with retinal blood flow ($R^2>0.81$ for all values of $\mathcal R$).
+Variation in OPP had almost no effects on macular flow ratio (Pearson's $R^2<10^{-3}$ for all values of $\mathcal R$) but was linearly correlated with retinal blood flow ($R^2>0.81$ for all values of $\mathcal R$).
 The coefficients are given for all scenarios in Table~\ref{tab:sup-Pearsonr-UQ}.
 
 
@@ -753,7 +749,7 @@ The coefficients are given for all scenarios in Table~\ref{tab:sup-Pearsonr-UQ}.
 Vascular morphology has been established as a biomarker for the development, progression and prognosis of several retinal diseases~\cite{Balaratnasingam_2023,Yao_2020}, including diabetic retinopathy~\cite{Garg2022,Hein_2023} and age-related macular degeneration~\cite{Told2023,Narnaware_2023}.
 Changes in these metrics may indicate impairment to retinal or macular blood flow, which could contribute to the development of the disease. However, quantifying these impairments in a sufficiently large population is challenging with conventional experimental techniques.
 
-The goals of this study were to: 1) develop a method that can generate morphologically and functionally coherent vascular networks of the retina and macula and is applicable to the generation of virtual populations; 2) to quantify the associations between vascular morphology in the macula with haemodynamics quantities in a population of healthy retinas. The method creates a vascular network spanning the superficial layer of the temporal retina, starting from the central retinal artery and ending in the central retinal vein. In the macula, the three capillary layers are modelled. Global sensitivity analysis on the method’s hyper-parameters paves the way for generating specific populations of retinas, based on the distribution of morphological metrics. 
+The goals of this study were to: 1) develop a method that can generate morphologically and functionally coherent vascular networks of the retina and macula and is applicable to the generation of virtual populations; 2) to quantify the associations between vascular morphology in the macula with haemodynamics quantities in a population of healthy retinae. The method creates a vascular network spanning the superficial layer of the temporal retina, starting from the central retinal artery and ending in the central retinal vein. In the macula, the three capillary layers are modelled. Global sensitivity analysis on the method’s hyper-parameters paves the way for generating specific populations of retinae, based on the distribution of morphological metrics. 
 
 \subsection{Validation}\label{sec:disc-validation}
 
@@ -795,10 +791,10 @@ As discussed by \citet{DoblhoffDier2014}, studies have reported average total re
 Despite the uncertainty in measurements, most studies seem to agree on values in healthy eyes around \SIrange{30}{40}{\micro\litre\per\minute}~\cite{DoblhoffDier2014,Riva1985}.
 Despite the difference in total retinal blood flow, Figure~\ref{fig:Flow-Velocity-dist}B shows that the discrepancy with experimental data is reduced as the vessels branch out.
 
-In Section~\ref{sec:UQ}, we quantified the effects of the two parameters of the haemodynamics model on total retinal blood flow and macula flow ratio.
+In Section~\ref{sec:UQ}, we quantified the effects of the two parameters of the haemodynamics model on total retinal blood flow and macular flow ratio.
 Increasing $\mathcal R$ is similar to gradually closing the connections to/from the vascular compartment.
-Therefore, flow is shunt towards the macula and macula flow ratio increases.
-Decreasing $\mathcal R$ has an opposite effect, however, the macula flow ratio will eventually reach a plateau when the CRA reaches its maximum capacity in term of blood flow: regardless of the resistance of paths outside the macula, blood will flow through the macula and total retinal blood flow is bounded by physical constraints.
+Therefore, flow is shunted towards the macula and macular flow ratio increases.
+Decreasing $\mathcal R$ has an opposite effect, however, the macular flow ratio will eventually reach a plateau when the CRA reaches its maximum capacity in term of blood flow: regardless of the resistance of paths outside the macula, blood will flow through the macula and total retinal blood flow is bounded by physical constraints.
 Indeed, in our model, for a given OPP, flow in the CRA is theoretically bounded by the radius and length of the CRA according to Equation~(\ref{eq:poiseuille}).
 The same effect explains the non-symmetrical changes in total retinal blood flow as $\mathcal R$ is decreased (see Figure~\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}). 
 
@@ -869,10 +865,10 @@ In the current study, the model was used to generate a population of healthy eye
 Strong association was found between macular morphology and total retinal blood flow and these associations were independent of the input parameters.
 The relatively large parameter space may be reduced down to four hyper-parameters for the generation of the vasculature, facilitating the adaptation of the method to generate specific populations.
 
-Further work will focus on generating a different population to assess the whether the model predict significantly different blood perfusion in diseased maculas.
+Further work will focus on generating a different virtual population to assess the whether the model will predict significantly different blood perfusion in diseased maculas.
 The model will also be coupled with oxygen delivery models to understand oxygen delivery to the tissue and how it may be affected by microvascular changes.
-This methodology, along with the accompanying haemodynamics model, offers an initial step towards gaining insights into the significance of imaging biomarkers in retinal diseases.
-The ultimate goal of this modelling is to develop virtual cohorts that can be used in \textit{in silico} clinical trials or to characterise treatment response in retinal diseases.
+This methodology, along with the accompanying haemodynamics model, offers an initial step towards gaining insights into the significance of vascular imaging biomarkers in retinal diseases and explore their relationship to no-vascular imaging biomarkers in macular diseases.
+Ultimately, this modelling work aims to develop virtual cohorts that can be used in \textit{in silico} clinical trials or to characterise treatment response in retinal diseases.
 
 \bibliography{bibliography}
 
@@ -887,7 +883,7 @@ The ultimate goal of this modelling is to develop virtual cohorts that can be us
 \toprule
  &
    &
-     \multicolumn{4}{l}{\begin{tabular}[c]{@{}l@{}}Total retinal blood flow\\ ($\SI{}{\micro\litre\per\minute}$)\end{tabular}} & \multicolumn{4}{l}{Macula flow ratio (\%)} \\
+     \multicolumn{4}{l}{\begin{tabular}[c]{@{}l@{}}Total retinal blood flow\\ ($\SI{}{\micro\litre\per\minute}$)\end{tabular}} & \multicolumn{4}{l}{macular flow ratio (\%)} \\
   \cmidrule(lr){3-6} \cmidrule(lr){7-10}\\
   R                        & OPP & mean & std & min & max  & mean & std & min  & max  \\
   \cmidrule(r){1-2} \cmidrule(lr){3-6} \cmidrule(l){7-10}
@@ -917,7 +913,7 @@ The ultimate goal of this modelling is to develop virtual cohorts that can be us
     Group                    & OPP = 80 & OPP = 100 & OPP = 120 & R = 500000 & R = 1000000 & R = 5000000 \\
     \cmidrule(r){2-4} \cmidrule(l){5-7}\\
     Total retinal blood flow & 0.88     & 0.89      & 0.87      & 0.98       & 0.98        & 0.95        \\
-    Macula flow ratio        & 0.89     & 0.89      & 0.88      & 0.00       & 0.00        & 0.00       \\
+    macular flow ratio        & 0.89     & 0.89      & 0.88      & 0.00       & 0.00        & 0.00       \\
     \bottomrule
 \end{tabular}%
 }
@@ -934,7 +930,7 @@ The ultimate goal of this modelling is to develop virtual cohorts that can be us
 \begin{figure}[ht!]
   \centering
   \includegraphics[width=.95\textwidth]{ParametersVP-To-MFR}
-  \caption{Association between macula flow ratio and population parameters. $\rho$ is the Spearman correlation coefficient.}
+  \caption{Association between macular flow ratio and population parameters. $\rho$ is the Spearman correlation coefficient.}
   \label{fig:sup-MFR}
 \end{figure}
 
