@@ -384,7 +384,7 @@ From the SVP, \SI{30}{\percent} of the arterioles and venules were selected for 
 
 All capillaries are initially given the same radius $r_{capillary}$ unless they are connected to an arteriole or venule, in which case their initial radius is twice that of other capillaries.
 Diameter transitions at bifurcations are smoothed using the method proposed by \citet{Linninger2013}.
-With this method, the diameter of a segment is changed to the average diameter of the segments it is connected to.
+In short, the diameter of a segment becomes the average of the diameters of itself and of the parent and daughter branches.
 
 The last necessary step for haemodynamics simulation is to give direction to the capillaries create from the Voronoi diagram.
 This can be achieve by using the diffusion equation.
@@ -454,23 +454,32 @@ and the blood viscosity $\mu$ as follows:
 Blood is a non-Newtonian fluid and is subject to the
 F\r{a}hr\ae us–Lindqvist effect~\cite{Faahraeus1931} in the
 microcirculation. 
-Non-Newtonian effects are accounted for by a radius-dependent,
+Non-Newtonian effects are accounted for by a diameter- and hematocrit-dependent,
 empirical, effective viscosity law~\cite{Secomb2013}:
 \begin{equation}
   \label{eq:viscosity}
-  \mu(r)=1+(\mu_{0.45}-1)\frac{(1-H_D)^C-1}{(1-0.45)^C-1},
+  \mu(D)=\left[1+(\mu_{0.45}-1)\frac{(1-H_D)^C-1}{(1-0.45)^C-1}\left(\frac{D}{D-1.1}\right)^2\right]\left(\frac{D}{D-1.1}\right)^2,
 \end{equation}
-where $\mu_{0.45}$ and $C$ are empirical constants and $H_D$ is the
-discharge haematocrit.
+where $D$ is the vessel diameter in microns, $H_D$ is the discharge haematocrit, 
+\begin{equation}
+  \label{eq:mu045_viscosity}
+  \mu_{0.45} = 6e^{-0.085D}+3.2-2.44e^{-0.06D^{0.645}}
+\end{equation}
+and
+\begin{equation}
+  \label{eq:C_viscosity}
+  C = \left(0.8 + e^{-0.075D}\right)\left(-1 + \left(1+10^{-11}D^{12}\right)^{-1}\right) + \left(1+10^{-11}D^{12}\right)^{-1}
+\end{equation}
 Discharge haematocrit is kept constant at \SI{45}{\percent} in this work.
 
 In the macular area, the vasculature is fully connected, with
-arterioles connecting to venules through capillaries.
+arterioles connecting to venules through capillaries, and therefore, no boundary conditions are required.
 Outside the macula, however, the first stage of the CCO detailed in
 Section~\ref{sec:CCO} leaves terminal vessels with no further branches, both on the arterial and venous sides, which need to somehow be linked to the central retinal vessels.
 This happens as a result of not generating the full extent of the peripheral vasculature.
 To close the vascular network, these terminal vessels need to somehow be linked to the CRA/CRV or haemodynamics in those vessels need to be explicitly given.
 In the absence of adequate data on haemodynamics for those vessels, we chose to instead link the terminal vessels through a compartment.
+This avoid the need for boundary conditions.
 All terminal arteries outflow into the compartment through artificial vessels with a resistance $\mathcal R$.
 All terminal veins drain the vascular compartment through artificial vessels with the same resistance. 
 The macula has twice the density of cells compared to the rest of the retina~\cite{Zouache2022}.
@@ -853,6 +862,8 @@ However, these joint distributions are not readily available, to the best of our
 
 The haemodynamics model proposed in this study makes several simplifying assumptions.
 In particular, plasma skimming effects, which lead to non-constant haematocrit, and non-Newtonian effects are important aspects of the haemodynamics in the microcirculation which were not incorporated in this model~\cite{Faahraeus1931,Secomb2013}.
+Additionnaly, we assumed that there were no lateral connections between the ICP and DCP and the circulation outside the macula.
+This is similar to assuming both plexi being connected `\textit{in-series}' with the SVP, which is now known to be only partially correct~\cite{An2020}.
 Finally, the parameter $\mathcal R$ introduced in this model remains unknown and its value was based on simple computation of the estimated macular blood flow and uncertainty quantification showed that this parameter had a strong effect on the fraction of flow going to the macula.
 However, it had limited effect on the total retinal blood flow (at most \SI{30}{\percent} of variation compared to baseline).
 In future work, its influence on other haemodynamics measurements should be thoroughly tested.
