@@ -388,9 +388,9 @@ With this method, the diameter of a segment is changed to the average diameter o
 
 The last necessary step for haemodynamics simulation is to give direction to the capillaries create from the Voronoi diagram.
 This can be achieve by using the diffusion equation.
-Representing the vasculature as a graph, temperatures are assigned to nodes: $1$ for arterial nodes, $0$ for venous nodes and $0.5$ for capillary nodes.
-The graph Laplacian of the vasculature is used to update the nodes' temperature.
-The temperatures provide an ordering of the capillaries, from hot to cold, that ensures the graph remains acyclic, which is a necessary condition for haemodynamics simulations.
+Representing the vasculature as a graph, values are assigned to nodes: $1$ for arterial nodes, $0$ for venous nodes and $0.5$ for capillary nodes.
+The graph Laplacian of the vasculature is used to update the nodal values, creating gradients along edges (vessel segments).
+These gradients provide an ordering of the capillaries, from high to low value, that ensures the graph remains acyclic, which is a necessary condition for haemodynamics simulations.
 
 \begin{figure}[ht!]
   \centering
