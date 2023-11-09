@@ -147,7 +147,7 @@ or symmetrical branching
 networks~\cite{Chiaravalli2022,Takahashi2009,Zhu2019} are used in many
 of these models. These approaches are favoured for their simplicity
 and adaptability to systems with limited information. However, they
-fail to reproduce the heterogeneity of the retinal
+fail to reproduce the complexity and heterogeneity of the retinal
 vasculature~\cite{Yu2019}. In contrast, models based on vascular
 networks reconstructed from imaging data~\cite{Bernabeu2014,Fry2020}
 are more faithful to the physiology of the retina, but the
@@ -634,7 +634,7 @@ The mean $\pm$ standard deviation in OPP was $\SI{44.3 \pm 4.5}{\mmHg}$ (range: 
 \begin{figure}[ht!]
   \centering
   \includegraphics[width=.95\textwidth]{Baseline_metrics}
-  \caption{\label{fig:OCTAValidation}Validation of the morphology of virtual vasculatures in the macula against OCTA measurements~\cite{Chu2016,Liu_2021,Ma2021}. Values show the deviation (in \%) from the literature average in healthy eyes. Whiskers extend to the minimum and maximum within \SI{1.5}{} times the inter-quartile range.}  
+  \caption{\label{fig:OCTAValidation}Comparison of the morphology of virtual vasculatures in the macula against OCTA measurements~\cite{Chu2016,Liu_2021,Ma2021}. Values show the deviation (in \%) from the literature average in healthy eyes. Whiskers extend to the minimum and maximum within \SI{1.5}{} times the inter-quartile range.}  
 \end{figure}
 
 The morphology of the macula, within a disk of diameter \SI{4}{\mm} centred at the fovea, is compared to average literature values computed on OCTAs~\cite{Chu2016,Liu_2021,Ma2021} in Figure~\ref{fig:OCTAValidation}.
@@ -644,7 +644,7 @@ Among the remaining metrics, VPI ($\SI{<14}{\percent}$), FD ($\SI{<3}{\percent}$
 \begin{figure}[ht!]
   \centering
   \includegraphics[width=.95\textwidth]{Horton_Strahler_Diameter_Distribution}
-  \caption{\label{fig:Horton_Strahler}Box-and-whisker plot of the diameter of virtual vessels for each Horton-Strahler order. On average, close to \SI{5000} vessel segments were analysed for each vasculature. Whiskers extend to the minimum and maximum within \SI{1.5}{} times the inter-quartile range.}  
+  \caption{\label{fig:Horton_Strahler}Box-and-whisker plot of the diameter of virtual vessels in the macula for each Horton-Strahler order. On average, close to \SI{5000} vessel segments were analysed for each vasculature. Whiskers extend to the minimum and maximum within \SI{1.5}{} times the inter-quartile range.}  
 \end{figure}
 
 Figure~\ref{fig:Horton_Strahler} shows vessel diameters for each stream order in the macula.
@@ -794,7 +794,7 @@ In addition, all parameters in our virtual populations were sampled from indepen
 This is exemplified by the three patients with the largest blood flows in our virtual cohort which were between two and three times larger than the average (see Figure~\ref{fig:sup-TRBF}).
 These patients shared a similar CRA radius, around \SI{28}{\percent} larger than the cohort's average.
 The large difference in retinal blood flow between those three patients was mainly due to differences in OPP.
-In experimental studies, the same relation between flow and radius is assumed and blood flow is typically estimated from velocity $v$ and diameter $D$ measurements as $Q=v\pi D^2/4$.
+In experimental studies, the same relation between flow and radius is assumed and blood flow is estimated from velocity $v$ and diameter $D$ measurements as $Q=v\pi D^2/4$.
 While not as pronounced as for our model, a small measurement error in vessel diameter combined with error in measurement in velocity still results in large deviations from the true blood flow.
 Both measurements are challenging and prone to errors~\cite{Leitgeb_2014}.
 As discussed by \citet{DoblhoffDier2014}, studies have reported average total retinal blood flow ranging from \SIrange[per-mode=symbol]{30}{80}{\micro\litre\per\minute}\cite{DoblhoffDier2014,Riva1985,Feke_1989}.
