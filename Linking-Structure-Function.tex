@@ -639,15 +639,23 @@ The mean $\pm$ standard deviation in OPP was $\SI{45.0 \pm 4.2}{\mmHg}$ (range: 
 
 \subsection{Validation of the network structure and haemodynamics}\label{sec:validation}
 
-\begin{figure}[ht!]
-  \centering
-  \includegraphics[width=.75\textwidth]{Baseline_metrics}
-  \caption{\label{fig:OCTAValidation}Comparison of the morphology of virtual vasculatures in the macula against OCTA measurements~\cite{Liu_2021,Ma2021,Mehta_2019}. Values show the deviation (in \%) from the literature values (VAD~\cite{Mehta_2019}, VSD~\cite{Mehta_2019}, VDI~\cite{Mehta_2020}, IVD~\cite{Liu_2021}, FD~\cite{Agarwal_2019} in the SVP, VAD~\cite{Chan2012}, FD~\cite{Agarwal_2019} for the ICP and DCP) for healthy eyes. Whiskers extend to the minimum and maximum within \SI{1.5}{} times the inter-quartile range. Unless otherwise specified, the metrics relate to the SVP.}  
-\end{figure}
+% \begin{figure}[ht!]
+%   \centering
+%   \includegraphics[width=.75\textwidth]{Baseline_metrics}
+%   \caption{\label{fig:OCTAValidation}Comparison of the morphology of virtual vasculatures in the macula against OCTA measurements~\cite{Liu_2021,Ma2021,Mehta_2019}. Values show the deviation (in \%) from the literature values (VAD~\cite{Mehta_2019}, VSD~\cite{Mehta_2019}, VDI~\cite{Mehta_2020}, IVD~\cite{Liu_2021}, FD~\cite{Agarwal_2019} in the SVP, VAD~\cite{Chan2012}, FD~\cite{Agarwal_2019} for the ICP and DCP) for healthy eyes. Whiskers extend to the minimum and maximum within \SI{1.5}{} times the inter-quartile range. Unless otherwise specified, the metrics relate to the SVP.}  
+% \end{figure}
 
-The morphology of the macula, within a disk of diameter \SI{3}{\mm} centred at the fovea, is compared to average literature values of the parameters computed on OCTAs~\cite{Chu2016,Liu_2021,Ma2021} in Figure~\ref{fig:OCTAValidation}.
-Except for vascular density, none of those values were used for the development of the model.
-Except VCI and IVD, all metrics were within \SI{18}{\percent} of deviation from literature values.
+The morphology of the macula, within a disk of diameter \SI{3}{\mm} centred at the fovea, is compared to literature values of the parameters computed on OCTAs~\cite{Chu2016,Liu_2021,Ma2021} in Figure~\ref{fig:OCTAValidation}.
+Values are reported as mean$\pm$standard deviation.
+In the SVP, the mean ($\pm$ standard deviation) for VAD, VDI, VSD, VCI, FD and IVD were $0.317\pm0.002$, $8.088\pm0.387$, $0.039\pm0.000$, $8839.619\pm403.843$, $1.323\pm0.008$ and $22.3\pm\SI{0.6}{\micro\metre}$, respectively.
+In the ICP, VAD and IVD were $0.210\pm0.002$ and $31.7\pm\SI{0.5}{\micro\metre}$.
+In the DCP, VAD and IVD were $0.176\pm0.001$ and $37.7\pm\SI{0.8}{\micro\metre}$.
+Finally, FD and IVD in the combined ICP-DCP complex were $1.435\pm0.001$ and $13.6\pm\SI{0.1}{\micro\metre}$.
+
+In the literature and for healthy retinas, depending on the image processing, VAD was found to range between $0.28$ and $0.53$~\cite{Mehta_2019}, VSD between $0.03$ and $0.051$~\cite{Mehta_2019}, VDI between $9.3$ and $10.45$~\cite{Mehta_2019}.
+Still in the SVC, studies have reported VCI values ranging from $1087$~\cite{Mehta_2019} to $17962$~\cite{Chu2016}, FD from $1.42$~\cite{Ma2021} to $1.638$~\cite{Agarwal_2019}.
+In~\cite{Liu_2021}, IVD was reported to be \SI{22}{\micro\metre} in the SVP, \SI{22}{\micro\metre} in the ICP and \SI{29}{\micro\metre} in the DCP.
+In a histology study of donor eyes,~\cite{Chan2012} found VAD in the ICP and DCP to be $0.196\pm0.01$ and $0.180\pm0.01$, respectively.
 
 \begin{figure}[ht!]
   \centering
