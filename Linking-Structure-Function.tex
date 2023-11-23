@@ -1,6 +1,6 @@
 \documentclass[11pt,]{article}
 
-\linespread{1.5}
+\linespread{1.}
 
 \usepackage{vruler}
 \setvruler[11pt][1][1][0][0][0pt][0pt][0pt][\textheight]
@@ -650,7 +650,6 @@ In the SVP, the mean ($\pm$ standard deviation) for VAD, VDI, VSD, VCI, FD and I
 In the ICP, VAD and IVD were $0.210\pm0.002$ and $31.7\pm\SI{0.5}{\micro\metre}$.
 In the DCP, VAD and IVD were $0.176\pm0.001$ and $37.7\pm\SI{0.8}{\micro\metre}$.
 Finally, FD and IVD in the combined ICP-DCP complex were $1.435\pm0.001$ and $13.6\pm\SI{0.1}{\micro\metre}$.
-
 In the literature and for healthy retinas, depending on the image processing technique, VAD was found to range between $0.28$ and $0.53$~\cite{Mehta_2019}, VSD between $0.03$ and $0.051$~\cite{Mehta_2019}, VDI between $9.3$ and $10.45$~\cite{Mehta_2019}.
 Still in the SVC, studies have reported VCI values ranging from $1087$~\cite{Mehta_2019} to $17962$~\cite{Chu2016}, FD from $1.42$~\cite{Ma2021} to $1.638$~\cite{Agarwal_2019}.
 In~\cite{Liu_2021}, IVD was reported to be \SI{22}{\micro\metre} in the SVP, \SI{22}{\micro\metre} in the ICP and \SI{29}{\micro\metre} in the DCP.
@@ -683,14 +682,14 @@ On the arterial side, both velocity and flow were visually lower compared to the
     \scalebox{1}{\adjustbox{valign=T}{\textbf{A}}}
   \end{subfigure}
   \begin{subfigure}[t]{.45\textwidth}
-    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Velocity_Distribution.png}}}
+    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Velocity_Distribution}}}
   \end{subfigure}
   \hfill
   \begin{subfigure}[t]{.02\textwidth}
     \scalebox{1}{\adjustbox{valign=T}{\textbf{B}}}
   \end{subfigure}
   \begin{subfigure}[t]{.45\textwidth}
-    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Flow_Distribution.png}}}
+    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Flow_Distribution}}}
   \end{subfigure}
   \hfill
 
@@ -726,16 +725,22 @@ These results indicate that those four parameters are enough to produce a virtua
 \begin{table}[ht!]
   \centering
   \sisetup{
-    range-phrase = \ {;}\ ,
-    range-units  = brackets,
-    open-bracket = [,
-    close-bracket= ],
+    inter-unit-product={\,},
+    number-unit-product={\,},
+    output-decimal-marker = {.},
+    exponent-product={\cdot},
+    group-separator={},
+    group-four-digits=false,
+    range-phrase = \ensuremath{,{}}, % ensuring proper spacing around ,
+    range-units = repeat,
+    round-mode=places,
   }
+  \newcommand*{\Range}[3][]{[\numrange[#1]{#2}{#3}]}
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{*{10}{l}}
       \toprule
       \begin{tabular}[c]{@{}l@{}}$N_{terms}$\\ stage 2\end{tabular} & \begin{tabular}[c]{@{}l@{}}$N_{terms}$ \\ stage 3\end{tabular} & $l_{lim}f_r$ & $\delta$ & $\eta$ & $\gamma$ & $\nu$ & $\theta_{min}$ & \begin{tabular}[c]{@{}l@{}}Neighborhood\\ factor\end{tabular} & \begin{tabular}[c]{@{}l@{}}$N_{seeds}$ \\ SVP\end{tabular} \\ \midrule
-      \SIrange{300}{500}{} & \SIrange{200}{400}{} & \SIrange{0.1}{0.9}{} & \SIrange{0.1}{0.9}{} & \SIrange{0.2}{0.5}{} & \SIrange{2}{3}{} & \SIrange{0}{72}{}  & \SIrange{0}{5}{}  & \SIrange{0}{5}{} & \SIrange{800}{1200}{} \\
+      \Range{300}{500}{} & \Range{200}{400}{} & \Range{0.1}{0.9}{} & \Range{0.1}{0.9}{} & \Range{0.2}{0.5}{} & \Range{2}{3}{} & \Range{0}{72}{}  & \Range{0}{5}{}  & \Range{0}{5}{} & \Range{800}{1200}{} \\
       \bottomrule
     \end{tabular}
     }
@@ -766,10 +771,10 @@ These results indicate that those four parameters are enough to produce a virtua
 \subsubsection{Macular flow fraction is independent of OPP}\label{sec:UQ}
 
 The results presented in Section~\ref{sec:results} rely on several hypotheses and parameters which introduce a degree of uncertainty.
-Across all scenarios, the mean retinal blood flow varied between \SI{-30.3}{\percent} and \SI{25.2}{\percent} of baseline values whereas macular flow fraction varied between \SI{-17.8}{\percent} and \SI{73.1}{\percent}.
-The results for each scenario tested are shown in Table~\ref{tab:sup-UQranges}.
-Variation in OPP had almost no effects on macular flow fraction (Pearson's $R^2<10^{-3}$ for all values of $\mathcal R$) but was linearly correlated with retinal blood flow ($R^2>0.81$ for all values of $\mathcal R$).
-The coefficients are given for all scenarios in Table~\ref{tab:sup-Pearsonr-UQ}.
+Across all scenarios, the mean retinal blood flow varied between \SI{-26.8}{\percent} and \SI{39.5}{\percent} of baseline values whereas macular flow fraction varied between \SI{-29.6}{\percent} and \SI{22.9}{\percent}.
+The results for each scenario tested are shown in Table~S1.
+Variation in OPP had almost no effects on macular flow fraction (Pearson's $R^2<10^{-3}$ for all values of $\mathcal R$) but was linearly correlated with retinal blood flow ($R^2>0.98$ for all values of $\mathcal R$).
+The coefficients are given for all scenarios in Table~S2.
 
 \section{Discussion}\label{sec:discussion}
 
@@ -827,7 +832,7 @@ Despite the difference in haemodynamics in the CRA, Figure~\ref{fig:Flow-Velocit
 Similarly to~\cite{DoblhoffDier2014}, blood velocity seem to scale linearly with diameter for larger vessels, but this trend is lost in smaller vessels.
 The overall lower blood velocity can be attributed, as discussed above, to the discrepancy in velocity in the CRA.
 
-The simulations found that macular flow fraction was between \SI{2.51}{\percent} and \SI{11.54}{\percent}, however, to best of our knowledge, there is no data to validate or refute these values.
+The simulations found that macular flow fraction was between \SI{2.51}{\percent} and \SI{11.54}{\percent}, however, to best of our knowledge, there is no data to validate these values.
 Assuming that regions of higher cell density require similarly higher blood flow, it can be estimated that the macula requires \SIrange{15}{30}{\percent} of the total retinal blood flow, though these are rough estimates.
 
 In Section~\ref{sec:UQ}, we quantified the effects of the two parameters of the haemodynamics model on total retinal blood flow and macular flow fraction.
@@ -835,7 +840,7 @@ Increasing $\mathcal R$ is similar to gradually closing the connections to/from 
 Therefore, flow is shunted towards the macula and macular flow fraction increases.
 Decreasing $\mathcal R$ has an opposite effect, however, the macular flow fraction will eventually reach a plateau when the CRA reaches its maximum capacity in term of blood flow: regardless of the resistance of paths outside the macula, blood will flow through the macula and total retinal blood flow is bounded by physical constraints.
 Indeed, in our model, for a given OPP, flow in the CRA is theoretically bounded by the radius and length of the CRA according to Equation~(\ref{eq:poiseuille}).
-The same effect explains the non-symmetrical changes in total retinal blood flow as $\mathcal R$ is decreased (see Figure~\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}). 
+The same effect explains the non-symmetrical changes in total retinal blood flow as $\mathcal R$ is decreased (see Figure~S4). %\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}). 
 
 \subsection{Associations between structure and function}\label{sec:disc-results}
 
@@ -846,9 +851,9 @@ Interestingly, VAD in the ICP showed a moderate positive correlation with retina
 However, VAD in the DCP and in the combined ICP-DCP complex, as well as FD in the ICP-DCP complex, did not show any significant correlations.
 None of the tested metrics were significantly associated with the fraction of flow transiting through the macula.
 Uncertainty quantification showed that those results were independent of the haemodynamics model's parameters.
-As shown in Figure~\ref{fig:sup-UQ-Coefficients}, varying OPP does not have any effects on the Spearman correlation coefficients.
+As shown in Figure~S3, varying OPP does not have any effects on the Spearman correlation coefficients.
 Increasing the value of $\mathcal R$ shifts the value of the coefficients for macular flow fraction towards the coefficients for total retinal blood flow.
-When $\mathcal R$ becomes large, macular flow becomes close to retinal flow, as seen in Figure~\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}, therefore increasing the impact of macular morphology on the overall system. 
+When $\mathcal R$ becomes large, macular flow becomes close to retinal flow, as seen in Figure~S4, therefore increasing the impact of macular morphology on the overall system. 
 
 In Section~\ref{sec:StructureAndFunction}, the correlation coefficients between morphological metrics and haemodynamics were obtained from one-to-one comparisons and therefore do not capture possible interplay between morphological metrics.
 Additional analysis is require to better understand which metrics or combination of metrics are strong predictors of blood flow.
@@ -913,86 +918,86 @@ This approach, complemented with haemodynamics and oxygen modelling takes an ess
 
 % \section{Supplementary material}
 %\newpage
-\supplementarysection
+% \supplementarysection
 
-\begin{table}[ht!]
-  \centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{llllll}
- &  & \multicolumn{2}{l}{Total retinal blood flow ($\mu L/min$)} & \multicolumn{2}{l}{Macular flow fraction (\%)} \\
-$\mathcal R$  & OPP & mean & std  & mean & std \\
- & 80  & 17.9 & 7.3  & 3.2  & 1.0 \\
-   & 100 & 22.4 & 9.1  & 3.2  & 1.0 \\
-   & 120 & 26.9 & 11.0 & 3.2  & 1.0 \\
- & 80  & 15.3 & 5.9  & 4.5  & 1.2 \\
-   & 100 & 19.1 & 7.3  & 4.5  & 1.2 \\
-   & 120 & 23.0 & 8.8  & 4.5  & 1.2 \\
- & 80  & 14.0 & 5.2  & 5.5  & 1.3 \\
-   & 100 & 17.5 & 6.5  & 5.5  & 1.3 \\
-   & 120 & 20.9 & 7.8  & 5.5  & 1.3
-\end{tabular}%
-}
-  \caption{\label{tab:sup-UQranges}Results of the 9 scenarios tested for uncertainty quantification.}
-\end{table}
+% \begin{table}[ht!]
+%   \centering
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{llllll}
+%  &  & \multicolumn{2}{l}{Total retinal blood flow ($\mu L/min$)} & \multicolumn{2}{l}{Macular flow fraction (\%)} \\
+% $\mathcal R$  & OPP & mean & std  & mean & std \\
+%  & 80  & 17.9 & 7.3  & 3.2  & 1.0 \\
+%    & 100 & 22.4 & 9.1  & 3.2  & 1.0 \\
+%    & 120 & 26.9 & 11.0 & 3.2  & 1.0 \\
+%  & 80  & 15.3 & 5.9  & 4.5  & 1.2 \\
+%    & 100 & 19.1 & 7.3  & 4.5  & 1.2 \\
+%    & 120 & 23.0 & 8.8  & 4.5  & 1.2 \\
+%  & 80  & 14.0 & 5.2  & 5.5  & 1.3 \\
+%    & 100 & 17.5 & 6.5  & 5.5  & 1.3 \\
+%    & 120 & 20.9 & 7.8  & 5.5  & 1.3
+% \end{tabular}%
+% }
+%   \caption{\label{tab:sup-UQranges}Results of the 9 scenarios tested for uncertainty quantification.}
+% \end{table}
 
 
-\begin{table}[ht!]
-\centering
-\resizebox{\textwidth}{!}{%
-  \begin{tabular}{lllllll}
-    \toprule
-    Dependent variable    & \multicolumn{3}{l}{$\mathcal R$} & \multicolumn{3}{l}{OPP}\\
-    \cmidrule(r){2-4} \cmidrule(l){5-7}\\
-    Group                    & OPP = 80 & OPP = 100 & OPP = 120 & R = 500000 & R = 1000000 & R = 5000000 \\
-    \cmidrule(r){2-4} \cmidrule(l){5-7}\\
-    Total retinal blood flow & 0.88     & 0.89      & 0.87      & 0.98       & 0.98        & 0.95        \\
-    macular flow fraction        & 0.89     & 0.89      & 0.88      & 0.00       & 0.00        & 0.00       \\
-    \bottomrule
-\end{tabular}%
-}
-\caption{\label{tab:sup-Pearsonr-UQ}Pearson's $R^2$ scores testing linear association between $\mathcal R$ and $OPP$ for the 9 scenarios tested during uncertainty quantification.}
-\end{table}
+% \begin{table}[ht!]
+% \centering
+% \resizebox{\textwidth}{!}{%
+%   \begin{tabular}{lllllll}
+%     \toprule
+%     Dependent variable    & \multicolumn{3}{l}{$\mathcal R$} & \multicolumn{3}{l}{OPP}\\
+%     \cmidrule(r){2-4} \cmidrule(l){5-7}\\
+%     Group                    & OPP = 80 & OPP = 100 & OPP = 120 & R = 500000 & R = 1000000 & R = 5000000 \\
+%     \cmidrule(r){2-4} \cmidrule(l){5-7}\\
+%     Total retinal blood flow & 0.88     & 0.89      & 0.87      & 0.98       & 0.98        & 0.95        \\
+%     macular flow fraction        & 0.89     & 0.89      & 0.88      & 0.00       & 0.00        & 0.00       \\
+%     \bottomrule
+% \end{tabular}%
+% }
+% \caption{\label{tab:sup-Pearsonr-UQ}Pearson's $R^2$ scores testing linear association between $\mathcal R$ and $OPP$ for the 9 scenarios tested during uncertainty quantification.}
+% \end{table}
 
-\begin{figure}[ht!]
-  \centering
-  \includegraphics[width=.95\textwidth]{ParametersVP-To-TRBF}
-  \caption{Association between retinal blood flow and population parameters. $\rho$ is the Spearman correlation coefficient.}
-  \label{fig:sup-TRBF}
-\end{figure}
+% \begin{figure}[ht!]
+%   \centering
+%   \includegraphics[width=.95\textwidth]{ParametersVP-To-TRBF}
+%   \caption{Association between retinal blood flow and population parameters. $\rho$ is the Spearman correlation coefficient.}
+%   \label{fig:sup-TRBF}
+% \end{figure}
 
-\begin{figure}[ht!]
-  \centering
-  \includegraphics[width=.95\textwidth]{ParametersVP-To-MFR}
-  \caption{Association between macular flow fraction and population parameters. $\rho$ is the Spearman correlation coefficient.}
-  \label{fig:sup-MFR}
-\end{figure}
+% \begin{figure}[ht!]
+%   \centering
+%   \includegraphics[width=.95\textwidth]{ParametersVP-To-MFR}
+%   \caption{Association between macular flow fraction and population parameters. $\rho$ is the Spearman correlation coefficient.}
+%   \label{fig:sup-MFR}
+% \end{figure}
 
-\begin{figure}[ht!]
-  \centering
-  \includegraphics[width=\textwidth]{UQ_SpearmanCoefficients}
-  \caption{\label{fig:sup-UQ-Coefficients}Effects of varying OPP and $\mathcal R$ on the associations between structural and haemodynamics outcomes.}
-\end{figure}
+% \begin{figure}[ht!]
+%   \centering
+%   \includegraphics[width=\textwidth]{UQ_SpearmanCoefficients}
+%   \caption{\label{fig:sup-UQ-Coefficients}Effects of varying OPP and $\mathcal R$ on the associations between structural and haemodynamics outcomes.}
+% \end{figure}
 
-\begin{figure}[ht!]
+% \begin{figure}[ht!]
 
-  \centering
+%   \centering
 
-  \begin{subfigure}[t]{.02\textwidth}
-    \scalebox{1}{\adjustbox{valign=T}{\textbf{A}}}
-  \end{subfigure}
-  \begin{subfigure}[t]{.45\textwidth}
-    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{TRBF_vs_R_OPP}}}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[t]{.02\textwidth}
-    \scalebox{1}{\adjustbox{valign=T}{\textbf{B}}}
-  \end{subfigure}
-  \begin{subfigure}[t]{.45\textwidth}
-    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Maculaflow_vs_R_OPP}}}
-  \end{subfigure}
-  \hfill
+%   \begin{subfigure}[t]{.02\textwidth}
+%     \scalebox{1}{\adjustbox{valign=T}{\textbf{A}}}
+%   \end{subfigure}
+%   \begin{subfigure}[t]{.45\textwidth}
+%     \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{TRBF_vs_R_OPP}}}
+%   \end{subfigure}
+%   \hfill
+%   \begin{subfigure}[t]{.02\textwidth}
+%     \scalebox{1}{\adjustbox{valign=T}{\textbf{B}}}
+%   \end{subfigure}
+%   \begin{subfigure}[t]{.45\textwidth}
+%     \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Maculaflow_vs_R_OPP}}}
+%   \end{subfigure}
+%   \hfill
   
-  \caption{\label{fig:sup-UQ-TRBF-MFR-vs-R-OPP}Effects of varying OPP and $\mathcal R$ on the haemodynamics outcomes.}
-\end{figure}
+%   \caption{\label{fig:sup-UQ-TRBF-MFR-vs-R-OPP}Effects of varying OPP and $\mathcal R$ on the haemodynamics outcomes.}
+% \end{figure}
 
 \end{document}
