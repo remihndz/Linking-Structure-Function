@@ -238,7 +238,7 @@ partially generated with a constructive constrained optimisation (CCO)
 algorithm~\cite{Talou2021}.
 
 Microvasculature is generated in the macula area (see
-Figure~\ref{fig:1}) across three vascular layers, namely superficial
+Figure~\ref{fig:1}) across three vascular layers, namely the superficial
 vascular plexus (SVP), intermediate(ICP) and deep capillary plexuses
 (DCP), arranged as parallel, planar layers at fixed depths \(z\).
 In contrast, the macrovasculature is only generated in the SVP.
@@ -252,51 +252,52 @@ Major temporal arcade vessels were manually segmented from the DRIVE data-set~\c
 The major temporal arcade vessels correspond to the four
 vessels (two veins, two arteries) that branch directly from the
 CRA and CRV and extend towards the superotemporal and inferotemporal quadrant of 
-the retina (see Figure~\ref{fig:1} for an example of the temporal
-arcades).  Vessel centreline segmentations, from their branching at
+the retina, as shown on Figure~\ref{fig:1}A.
+Vessel centreline segmentations, from their branching at
 the level of the optic disc to the boundary of the visible retina,
-were extracted from 8 colour fundus photographs centred on the fovea.
-Images were excluded if the arteries and veins could not be
-confidently differentiated or if the eye presented pathologies, as
-reported in the data-set.  Segmentation was performed using the
+were extracted from 8 colour fundus photographs of eyes without retinopathy and centred at the fovea.
+% Images were excluded if the arteries and veins could not be
+% confidently differentiated or if the eye presented pathologies, as
+% reported in the data-set.
+Segmentation was performed using the
 `freehand line' tool in ImageJ 1.48~\cite{Schneider2012}.  The pixel
 coordinates for each curve were extracted and translated so that the
 fovea is at the origin.  This ensures that the model learns the
 distance between the optic disc and the fovea and between the arcades
 and the fovea, which may have importance in disease~\cite{Arslan2021}.
 For images of right eyes, curves are reflected across the y-axis so that all shapes correspond to left eyes (i.e., the optic disc will be on the left-hand side of the image).
-\\
-The extracted curves were then smoothed using B-splines and their
-inflection points computed. For a B-spline curve
-$\Gamma(t)=\left(x(t),y(t)\right)$ sampled at times $t_i,\ i=1,…,k$,
-the inflection points are times $t_i$ where
-$\varphi(t)=x^\prime(t)y^{\prime\prime}(t)-x^{\prime\prime}(t)y^\prime(t)$
-changes sign, i.e.,
-$sign(\varphi(t_{i-1}))-sign(\varphi(t_i))\neq0$. In this work, we
-used $k=30$ and $t_i=i k^{-1}$ to compute the inflection
-points. Higher sampling rates lead to more inflections points. The
-start and end points of the curves along with the inflection points
-form the primary training data-set for the statistical shape
-model. Because not all segmented curves yield the same amount of
-inflection points, we up sample the curves by splitting the longest
-vessels in half, repeating as necessary. This results in 4 training
-sets, one for each arcade, with varying number of training points
-between sets. All shapes in a training set are aligned using the
-Kabsch-Umeyama algorithm \cite{Umeyama1991}. Effectively, all shapes are
-rotated, translated and scaled as to minimise the least mean-squared
-error between the shapes and their (aligned) mean.
-\\
-For arcade vessel $j$, with $m_j$ points in each shape, a data matrix
-$X_j\in\mathbb R^{2m_j,n}$ is assembled by stacking the curves
-row-wise. Denoting $(e_{j,i}, \lambda_{j,i})$ the eigenvectors and
-associated eigenvalues of the Pearson correlation matrix of $X_j$,
-construct $P_j\in\mathbb R^{2m_j,l_j}$ by stacking the $l_j$
-eigenvectors with the largest eigenvalues column-wise. The number of
-modes of variations $l_j$ may be chosen as to explain $>95\%$ of the
-variance in the data. Finally, denoting $\bar x_j$ the mean of all
-shapes, one can create a new, unique shape x using $x=\bar x_j + P_jb$
-where $b\sim\mathcal N(0,diag(\lambda_{j,i}, i=1,...,l_j))$. The
-resulting $m_j$ points are interpolated using centripetal Catmull-Rom splines~\cite{Catmull_1974} before being used in the next steps.
+% \\
+% The extracted curves were then smoothed using B-splines and their
+% inflection points computed. For a B-spline curve
+% $\Gamma(t)=\left(x(t),y(t)\right)$ sampled at times $t_i,\ i=1,…,k$,
+% the inflection points are times $t_i$ where
+% $\varphi(t)=x^\prime(t)y^{\prime\prime}(t)-x^{\prime\prime}(t)y^\prime(t)$
+% changes sign, i.e.,
+% $sign(\varphi(t_{i-1}))-sign(\varphi(t_i))\neq0$. In this work, we
+% used $k=30$ and $t_i=i k^{-1}$ to compute the inflection
+% points. Higher sampling rates lead to more inflections points. The
+% start and end points of the curves along with the inflection points
+% form the primary training data-set for the statistical shape
+% model. Because not all segmented curves yield the same amount of
+% inflection points, we up sample the curves by splitting the longest
+% vessels in half, repeating as necessary. This results in 4 training
+% sets, one for each arcade, with varying number of training points
+% between sets. All shapes in a training set are aligned using the
+% Kabsch-Umeyama algorithm~\cite{Umeyama1991}. Effectively, all shapes are
+% rotated, translated and scaled as to minimise the root-mean-squared deviation between the shapes and their (aligned) mean.
+% \\
+% For arcade vessel $j$, with $m_j$ points in each shape, a data matrix
+% $X_j\in\mathbb R^{2m_j,n}$ is assembled by stacking the curves
+% row-wise. Denoting $(e_{j,i}, \lambda_{j,i})$ the eigenvectors and
+% associated eigenvalues of the Pearson correlation matrix of $X_j$,
+% construct $P_j\in\mathbb R^{2m_j,l_j}$ by stacking the $l_j$
+% eigenvectors with the largest eigenvalues column-wise. The number of
+% modes of variations $l_j$ may be chosen as to explain $>95\%$ of the
+% variance in the data. Finally, denoting $\bar x_j$ the mean of all
+% shapes, one can create a new, unique shape x using $x=\bar x_j + P_jb$
+% where $b\sim\mathcal N(0,diag(\lambda_{j,i}, i=1,...,l_j))$. The
+% resulting $m_j$ points are interpolated using centripetal Catmull-Rom splines~\cite{Catmull_1974} before being used in the next steps.
+A simple PCA-based statistical shape model learns the featuers of all four temporal arcade vessels (see Supplementary Material S1).
 The generated shapes are converted to length units using the rule of thumb for fundus photographs: $\SI{10}{\degree}\approx\SI{5}{\mm}$, where the angle describes the
 field of view of the fundus camera. The generated vessels are linked
 to the CRV or CRA accordingly and
@@ -321,7 +322,6 @@ geometrically constrained to prevent vessels from crossing the line
 that passes through the optic disc centre and the centre of the fovea,
 which separates the superior and inferior halves of the
 retina. Additionally, we used a custom probability distribution
-(see Table~\ref{tab:parameters}) 
 to select the location of new vessel segments to mimic an angiogenic
 process biased towards the fovea, while keeping the foveal avascular
 zone (FAZ) free of vessels. 
@@ -329,8 +329,8 @@ Indeed, the fovea has higher concentration
 of cells, and therefore more metabolic needs, compared to the rest of
 the retina~\cite{Zouache2022}.
 The CCO is applied in three stages, within three circular regions: in
-a disk of radius $r_{retina}$, in a annulus with radii $r_{parafovea},
-r_{perifovea}$ and finally in a disk of radius $r_{parafovea}$
+a disk of radius $r_{retina}$, in a annulus with radii $r_{parafovea}$ and $r_{perifovea}$
+and finally in a disk of radius $r_{parafovea}$
 (see Figure~\ref{fig:1}).
 
 To simulate growth biased towards the fovea while keeping the FAZ free
@@ -351,16 +351,16 @@ Ocular perfusion pressure (OPP) refers to the pressure drop between the CRA and 
 OPP=p_{CRA}-p_{CRV}.\label{eq:OPP}
 \end{equation}
 Pressure in the CRV is assumed equal to IOP~\cite{Arciero2013,Guidoboni2014,Zheng2010}.
-Pressure in the CRA is estimated as two thirds of the mean arterial pressure (MAP)~\cite{Arciero2013,Guidoboni2014,Zheng2010}:
+Pressure in the CRA is estimated from the mean arterial pressure (MAP)~\cite{Arciero2013,Guidoboni2014,Zheng2010}:
 \begin{equation}
 p_{CRA}=\frac23MAP\label{eq:pCRA}
 \end{equation}
-The pressure drop across the vascular trees are set to
+The pressure drops across the vascular trees are set to
 $p_{pre-capillary}-p_{CRV}$ for the venous tree and
 $p_{CRA}-p_{pre-capillary}$ for the arterial trees. The value of
 $p_{pre-capillary}$ is taken from pressure in pre- and post-capillary vessels in
-the theoretical model by~\cite{Takahashi2009} and reported in
-Table~\ref{tab:parameters}.
+the theoretical model by~\cite{Takahashi2009}. % and reported in
+% Table~\ref{tab:parameters}.
 
 \paragraph{Microvasculature}\label{sec:microvasculature} At the macro
 scale, arterioles and venules generally follow a bifurcating
@@ -369,7 +369,7 @@ branches. The CCO algorithm follows this logic to create vascular
 trees.  At the micro scale, however, capillaries tend to form complex
 nets, forming loops and anastomoses~\cite{An2020} that are
 incompatible with the CCO’s logic.
-Therefore, we adopted the methodology proposed by~\cite{Linninger2013} to generate capillary beds connecting
+Therefore, we adopted the methodology proposed in~\cite{Linninger2013} to generate capillary beds connecting
 the arterial and venous trees.
 In short, a disk of the size of the macula (see Table~\ref{tab:parameters}) is meshed with a Delaunay
 triangulation generated from $N_{Seeds}$ randomly sampled points
@@ -482,9 +482,9 @@ Discharge haematocrit is kept constant at \SI{45}{\percent} in this work.
 In the macular area, the vasculature is fully connected, with
 arterioles connecting to venules through capillaries, and therefore, no boundary conditions are required.
 Outside the macula, however, the first stage of the CCO detailed in
-Section~\ref{sec:CCO} leaves terminal vessels with no further branches, both on the arterial and venous sides, which need to somehow be linked to the central retinal vessels.
+Section~\ref{sec:CCO} leaves terminal vessels with no further branches, both on the arterial and venous sides.
 This happens as a result of not generating the full extent of the peripheral vasculature.
-To close the vascular network, these terminal vessels need to somehow be linked to the CRA/CRV or haemodynamics in those vessels need to be explicitly given.
+To close the vascular network, these terminal vessels need to somehow be linked to the CRA/CRV or haemodynamics in those vessels need to be explicitly given as boundary conditions of the model.
 In the absence of adequate data on haemodynamics for those vessels, we chose to instead link the terminal vessels through a compartment.
 This avoid the need for boundary conditions.
 All terminal arteries outflow into the compartment through artificial vessels with a resistance $\mathcal R$.
@@ -590,33 +590,33 @@ We derive \SI{95}{\percent} confidence intervals using bootstrapping ($N=1000$).
 The method presented in this work relies on several hyper-parameters listed in Table~\ref{tab:parameters}.
 The values for these parameters are either unknown (e.g., $N_{terms}$) or are subject to uncertainty in their measurement (e.g., $\delta$, $\gamma$).
 We performed a variance-based sensitivity analysis to decompose the variance in the model's output ($Var[Y]$).
-For $d$ input parameters, the $Var[Y]$ is decomposed into fractions $V_u$ attributed to sets of inputs $X_u$ as:
-\begin{equation}
-  \label{eq:DecompositionVariance}
-  Var[Y] = \sum_{i=1}^d V_i + \sum_{1\le i<j\le d} V_{i,j} + \dots + V_{1,2,\dots,d},
-\end{equation}
-where
-\begin{equation}
-  \label{eq:firstOrderVariance}
-  V_i = Var\left[E\left(Y|X_i\right)\right],
-\end{equation}
-is the first order contribution of variable $X_i$ to $Var[Y]$ and
-\begin{equation}
-  \label{eq:interactionVariance}
-  V_{i,j} = Var\left[E\left(Y|X_i,X_j\right)\right] - V_i - V_j,
-\end{equation}
-is the contribution of the interactions between $X_i$ and $X_j$.
-For higher order interactions (e.g., $V_{i,j,k}$), similar expressions can be built.
+% For $d$ input parameters, the $Var[Y]$ is decomposed into fractions $V_u$ attributed to sets of inputs $X_u$ as:
+% \begin{equation}
+%   \label{eq:DecompositionVariance}
+%   Var[Y] = \sum_{i=1}^d V_i + \sum_{1\le i<j\le d} V_{i,j} + \dots + V_{1,2,\dots,d},
+% \end{equation}
+% where
+% \begin{equation}
+%   \label{eq:firstOrderVariance}
+%   V_i = Var\left[E\left(Y|X_i\right)\right],
+% \end{equation}
+% is the first order contribution of variable $X_i$ to $Var[Y]$ and
+% \begin{equation}
+%   \label{eq:interactionVariance}
+%   V_{i,j} = Var\left[E\left(Y|X_i,X_j\right)\right] - V_i - V_j,
+% \end{equation}
+% is the contribution of the interactions between $X_i$ and $X_j$.
+% For higher order interactions (e.g., $V_{i,j,k}$), similar expressions can be built.
 Sobol indices summarise the importance of sets of inputs with indices between $0$ and $1$~\cite{Saltelli2008}.
 In this work, we report first ($S_i$) and total ($S_{T_i}$) order indices, which are often enough to understand parameter importance~\cite{Saltelli2008}, defined as:
-\begin{equation}
-  \label{eq:SobolIndices}
-  \begin{aligned}
-    S_i &= \frac{V_i}{Var[Y]}, \\
-    S_{T_i} & = \frac{E\left[Var\left(Y|X_{\tilde i}\right)\right]}{Var[Y]},
-    \end{aligned}
-\end{equation}
-where $X_{\tilde i}$ is the set of all inputs, excluding $X_i$.
+% \begin{equation}
+%   \label{eq:SobolIndices}
+%   \begin{aligned}
+%     S_i &= \frac{V_i}{Var[Y]}, \\
+%     S_{T_i} & = \frac{E\left[Var\left(Y|X_{\tilde i}\right)\right]}{Var[Y]},
+%     \end{aligned}
+% \end{equation}
+% where $X_{\tilde i}$ is the set of all inputs, excluding $X_i$ and $V_i$ is the first order contribution of variable $X_i$ to $Var[Y]$.
 In short, $S_i$ quantifies the contribution of $X_i$ alone whereas $S_{T_i}$ quantify its total contribution, namely its first order contribution plus all the higher-order contributions~\cite{Saltelli2008}.
 
 \subsection{Uncertainty quantification}\label{sec:methods-UQ}
@@ -918,24 +918,18 @@ This approach, complemented with haemodynamics and oxygen modelling takes an ess
 \begin{table}[ht!]
   \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}llllllllll@{}}
-\toprule
- &
-   &
-     \multicolumn{4}{l}{\begin{tabular}[c]{@{}l@{}}Total retinal blood flow\\ ($\SI{}{\micro\litre\per\minute}$)\end{tabular}} & \multicolumn{4}{l}{macular flow fraction (\%)} \\
-  \cmidrule(lr){3-6} \cmidrule(lr){7-10}\\
-  R                        & OPP & mean & std & min & max  & mean & std & min  & max  \\
-  \cmidrule(r){1-2} \cmidrule(lr){3-6} \cmidrule(l){7-10}
-{\SI{5e5}{}}  & 80  & 12.4 & 4.7 & 2.7 & 33.9 & 14.9 & 3.5 & 9.4  & 31.9 \\
- & 100 & 15.5 & 6.0 & 3.4 & 42.9 & 14.9 & 3.4 & 8.5  & 27.1 \\
- & 120 & 18.6 & 7.2 & 4.0 & 51.0 & 14.9 & 3.4 & 8.7  & 28.8 \\
-{\SI{5e5}{}} & 80  & 11.8 & 4.5 & 2.6 & 32.4 & 18.1 & 3.6 & 11.8 & 32.7 \\
- & 100 & 14.8 & 5.6 & 3.3 & 40.5 & 18.0 & 3.5 & 10.6 & 31.7 \\
- & 120 & 17.8 & 6.7 & 3.9 & 47.9 & 18.2 & 3.7 & 11.0 & 35.9 \\
-\SI{5e6}{} & 80  & 10.2 & 3.7 & 2.5 & 26.4 & 30.7 & 3.8 & 22.6 & 41.7 \\
- & 100 & 12.8 & 4.6 & 3.1 & 32.5 & 30.8 & 3.8 & 21.1 & 44.2 \\
- & 120 & 15.3 & 5.5 & 3.6 & 39.1 & 30.6 & 3.7 & 22.7 & 41.1 \\
-  \bottomrule
+\begin{tabular}{llllll}
+ &  & \multicolumn{2}{l}{Total retinal blood flow ($\mu L/min$)} & \multicolumn{2}{l}{Macular flow fraction (\%)} \\
+$\mathcal R$  & OPP & mean & std  & mean & std \\
+ & 80  & 17.9 & 7.3  & 3.2  & 1.0 \\
+   & 100 & 22.4 & 9.1  & 3.2  & 1.0 \\
+   & 120 & 26.9 & 11.0 & 3.2  & 1.0 \\
+ & 80  & 15.3 & 5.9  & 4.5  & 1.2 \\
+   & 100 & 19.1 & 7.3  & 4.5  & 1.2 \\
+   & 120 & 23.0 & 8.8  & 4.5  & 1.2 \\
+ & 80  & 14.0 & 5.2  & 5.5  & 1.3 \\
+   & 100 & 17.5 & 6.5  & 5.5  & 1.3 \\
+   & 120 & 20.9 & 7.8  & 5.5  & 1.3
 \end{tabular}%
 }
   \caption{\label{tab:sup-UQranges}Results of the 9 scenarios tested for uncertainty quantification.}
