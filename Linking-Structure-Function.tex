@@ -1,6 +1,6 @@
 \documentclass[11pt,]{article}
 
-\linespread{1.}
+\linespread{2.}
 
 \usepackage{vruler}
 \setvruler[11pt][1][1][0][0][0pt][0pt][0pt][\textheight]
@@ -521,15 +521,15 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
     \textbf{Macrovasculature hyper-parameters} & \textbf{Description}                                                                                                                            & \begin{tabular}{ll} \textbf{Value}\\(stage 1, 2, 3)\end{tabular}\\
     \midrule
     
-    {$N_{terms}$}                      & {Number of terminal vessels added.} & {$200, 400, 300$}
+    {$N_{terms}$}                      & {Number of terminal vessels added.} & {$200, 150, 75$}
     \\ \midrule
     {$p_{pre-capillary}$}              & {Target pressure at terminal vessels (\SI{}{\mmHg}).} & {$30,23,23$}
     \\ \midrule
-    {$r_{retina}$}                     & {Radius of the modelled region, centred around the fovea (\SI{}{\cm}).}               & {$2$}
+    {$r_{retina}$}                     & {Radius of the modelled region, centred around the fovea (\SI{}{\cm}).}               & {$1.5$}
     \\ \midrule
     {$r_{perifovea}$}                  & {Radius of the perifoveal or macular region (\SI{}{\mm}).}  & {$3$}
     \\ \midrule
-    {$r_{parafovea}$}                  & {Radius of the parafoveal region (\SI{}{\mm}).} & {$1.25$}
+    {$r_{parafovea}$}                  & {Radius of the parafoveal region (\SI{}{\mm}).} & {$1.5$}
     \\ \midrule
     {$(\sigma,\mu, r_0)$}              & {Parameters of the lognormal distribution giving the distance to the fovea as $r = r_0 + e^{\mu+\sigma Z}$ with $Z\sim\mathcal N(0,1)$.} & {$(4, -0.5, 0.02)$ for all stages.}                                                                                                  \\ \midrule
     {$\delta$}                         & {Symmetry ratio at bifurcations.}                                                                                                        & {$0.8, 0, 0$}
@@ -542,10 +542,10 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
 
     \textbf{Microvasculature hyper-parameters} & \textbf{Description}                                                                                                                            & \begin{tabular}{ll}\textbf{Value}\\(SVP, ICP, DCP)\end{tabular}
     \\ \midrule
-    {$N_{seeds}$}                      & {Number of seeds used to generate a capillary bed.}                                                                                      & {$1000, 6200, 7200$}                                                                                                                 \\ \midrule
+    {$N_{seeds}$}                      & {Number of seeds used to generate a capillary bed.}                                                                                      & {$5500, 16000, 10500$}                                                                                                                 \\ \midrule
     {$r_{capillary}$}                  & {Radius of capillaries (\SI{}{\micro\meter}).}                                                                                                       & {$2.5,2.5,2.5$}                                                                                                                      \\ \midrule
-    {$r_{FAZ}$}                        & {Radius of the foveal avascular zone (\SI{}{\mm}).}                                                                                            & {$0.25, 0.25,0.25$}                                                                                                                  \\ \midrule
-    $z$                                                    & Plexus depth (\SI{}{\micro\meter}). & $0, 125, 145$
+    {$r_{FAZ}$}                        & {Radius of the foveal avascular zone (\SI{}{\mm}).}                                                                                            & {$0.25, 0.25,0.25$}~\cite{VerticchioVercellin_2021}                                                                                                                  \\ \midrule
+    $z$                                                    & Plexus depth (\SI{}{\micro\meter}). & $0, 135, 180$~\cite{VerticchioVercellin_2021}
     \\
     \bottomrule
   \end{tabularx}
