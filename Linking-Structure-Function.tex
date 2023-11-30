@@ -80,7 +80,7 @@
 \affil[1]{Liverpool Centre for Cardiovascular Science, University of Liverpool and Liverpool Heart \& Chest Hospital Liverpool, UK}                                                                               
 \affil[2]{Department of Cardiovascular and Metabolic Medicine, Institute of Life Course and Medical Sciences, University of Liverpool, UK}
 \affil[3]{St Paul's Eye Unit, Liverpool University Hospitals NHS Foundation Trust, Liverpool, UK}
-\affil[4]{Department of Eye and Vision Science, Institute of Life Course and Medical Sciences, University of Liverpool, UK}
+\affil[4]{Department of Eye and Vision Sciences, Institute of Life Course and Medical Sciences, University of Liverpool, UK}
 
 \providecommand{\keywords}[1]{\textbf{\textit{Keywords---}} #1}
 
@@ -90,19 +90,17 @@
 
 \begin{abstract}
   \textbf{Purpose:}
-  Despite image-based macular microvascular parameters are potent disease biomarkers, their relationship with retinal perfusion remains ambiguous.
-  We establish a versatile framework for exploring the interplay between the retinal vasculature structure and function.
-  We develop a method to generate virtual vasculatures of the retina from the central retinal vessels down to the macular capillaries.
-  Alongside this, we develop a haemodynamics model which tests the associations between vascular morphology, as delineated by optical coherence tomography angiography (OCTA), and retinal perfusion.
+  This study explores the relationship between microvascular parameters as delineated by optical coherence tomography angiography (OCTA) and retinal perfusion.
+  We introduce a versatile framework to examine the interplay between the retinal vasculature structure and function, generating virtual vasculatures from central retinal vessels to macular capillaries.
+  Alongside this, we develop a haemodynamics model which tests the associations between vascular morphology and retinal perfusion.
 
-  \textbf{Methods:} The method to generate the vasculature is based on the distribution of four clinical parameters pertaining to the dimension and blood pressure of the central retinal vessels, constructive constrained optimisation and Voronoi diagram.
+  \textbf{Methods:} The generation of the vasculature is based on the distribution of four clinical parameters pertaining to the dimension and blood pressure of the central retinal vessels, constructive constrained optimisation and Voronoi diagram.
   Arterial and venous trees are generated in the temporal retina and connected through three layers of capillaries at different depths in the macula.
-  Morphology of the virtual vasculatures is compared with OCTA data.
-  Associations between total retinal blood flow and macular flow fraction and vascular morphology are derived as Spearman rank coefficients and uncertainty from input parameters is quantified.
+  The correlations between total retinal blood flow and macular flow fraction and vascular morphology are derived as Spearman rank coefficients and uncertainty from input parameters is quantified.cc
   
   \textbf{Results:} A virtual cohort of 200 healthy vasculatures were generated.
-  % All metrics were in good agreement with ranges of pusblished values.
-  Total retinal blood flow was strongly correlated with vessel area density, vessel diameter index, fractal dimension and vessel calibre index.
+  Mean and standard deviation for retinal blood flow and macular flow ratio were $\SI[per-mode=symbol]{19.15\pm7.34}{\micro\litre\per\minute}$ and $\SI{4.52\pm1.19}{\percent}$.
+  Retinal blood flow was correlated with vessel area density, vessel diameter index, fractal dimension and vessel calibre index.
   The macular flow fraction was not correlated with any morphological metrics.
 
   \textbf{Conclusions:} The proposed framework is able to reproduce vascular networks in the macula that are morphologically and functionally similar to real vasculature.
@@ -118,7 +116,7 @@
 %\linenumbers
 \section{Introduction}\label{introduction}
 
-The retina is a highly oxygen-dependant, complex band of tissue at the back of the eye which plays a key role in visual function.
+The retina is a highly oxygen-dependent, complex band of tissue at the back of the eye which plays a key role in visual function.
 It requires close interplay between many different cell types and supporting structures, including a complex vascular system~\cite{Hernandez2023}.
 As a result, the retina is sensitive to small changes which may lead to loss of visual functions.
 \textit{In silico} modelling has the potential to offer insight into the complex interactions between the retinal environment and the underlying causes of retinal diseases.
@@ -183,7 +181,7 @@ Our study sought to: 1) develop a method for generating cohesive vascular networ
 3) quantify associations between macular vascular morphology and haemodynamics parameters in a healthy retinal population.
 Our method constructs a vascular network spanning the superficial layer of the temporal retina, originating from the central retinal artery (CRA) and terminating at the central retinal vein (CRV).
 In the macula, all three capillary layers are modelled.
-Additionally, global sensitivity analysis on the method's hyper-parameters lays the foundation for generating tailored retinal populations based on the distribution of morphological metrics.
+Additionally, global sensitivity analysis on the method's hyperparameters lays the foundation for generating tailored retinal populations based on the distribution of morphological metrics.
 
 % This paper presents a framework for generating virtual populations of
 % the microvasculature of the macula, using a few clinical measurements as
@@ -194,7 +192,7 @@ Additionally, global sensitivity analysis on the method's hyper-parameters lays 
 % with arterioles and venules connected through a capillary bed; and a
 % haemodynamics model.
 In Section~\ref{sec:validation}, we show a comparison of the microvascular structure of the model with OCTA measurements and validate the blood flow model against two independent experimental studies.
-In Section~\ref{sec:gsaUQ}, global sensitivity analysis techniques are applied to each aspect of the model to quantify the uncertainty brought about by the uncertainty in clinical parameters and model hyper-parameters.
+In Section~\ref{sec:gsaUQ}, global sensitivity analysis techniques are applied to each aspect of the model to quantify the uncertainty brought about by the uncertainty in clinical parameters and model hyperparameters.
 Section~\ref{sec:discussion} contains a discussion of the results, while Section~\ref{sec:conclusion} summarises the conclusions and future perspectives.
 
 \section{Methods}\label{sec:methods}
@@ -222,7 +220,7 @@ model.
     \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth, valign=t]{Figure1B.pdf}}}
   \end{subfigure}
 
-  \caption{Architecture of the retina. (\textbf{A}) Landmarks of the retina on a \SI{45}{\degree} field-of-view colour fundus photograph from the DRIVE data-set~\cite{Staal_2004}.
+  \caption{Architecture of the retina. (\textbf{A}) Landmarks of the retina on a \SI{45}{\degree} field-of-view colour fundus photograph from the DRIVE dataset~\cite{Staal_2004}.
   (\textbf{B}) The three capillary layers of the macula imaged with histology. Image from the work of~\cite{An2020}, available under a CC BY-NC-ND license.}
   \label{fig:1}
 \end{figure}
@@ -237,7 +235,7 @@ Macroscale vasculature is generated on the temporal retina, starting
 from the CRA and ending in the CRV.
 First, a statistical shape model~\cite{Davies_2008}
 of the major temporal arcades was developed using a fundus
-photographs data-set.  The remaining superficial temporal vasculature is
+photographs dataset.  The remaining superficial temporal vasculature is
 partially generated with a constructive constrained optimisation (CCO)
 algorithm~\cite{Talou2021}.
 
@@ -252,7 +250,7 @@ This is because the ICP and DCP are composed of capillaries in the perifovea and
 
 \paragraph{Statistical shape model}
 
-Major temporal arcade vessels were manually segmented from the DRIVE data-set~\cite{Staal_2004}.
+Major temporal arcade vessels were manually segmented from the DRIVE dataset~\cite{Staal_2004}.
 The major temporal arcade vessels correspond to the four
 vessels (two veins, two arteries) that branch directly from the
 CRA and CRV and extend towards the superotemporal and inferotemporal quadrant of 
@@ -262,7 +260,7 @@ the level of the optic disc to the boundary of the visible retina,
 were extracted from 8 colour fundus photographs of eyes without retinopathy and centred at the fovea.
 % Images were excluded if the arteries and veins could not be
 % confidently differentiated or if the eye presented pathologies, as
-% reported in the data-set.
+% reported in the dataset.
 Segmentation was performed using the
 `freehand line' tool in ImageJ 1.48~\cite{Schneider2012}.  The pixel
 coordinates for each curve were extracted and translated so that the
@@ -281,7 +279,7 @@ For images of right eyes, curves are reflected across the y-axis so that all sha
 % used $k=30$ and $t_i=i k^{-1}$ to compute the inflection
 % points. Higher sampling rates lead to more inflections points. The
 % start and end points of the curves along with the inflection points
-% form the primary training data-set for the statistical shape
+% form the primary training dataset for the statistical shape
 % model. Because not all segmented curves yield the same amount of
 % inflection points, we up sample the curves by splitting the longest
 % vessels in half, repeating as necessary. This results in 4 training
@@ -415,14 +413,21 @@ These gradients provide an ordering of the capillaries, from high to low value, 
       \scalebox{1}{\adjustbox{valign=T}{\input{imgs-pdf/PrettyPicture.pdf_tex}}}
     }
   \end{subfigure}
-  % \hfill
   \\
+  \vspace{.5cm}
   \begin{subfigure}[t]{.02\textwidth}
     \scalebox{1}{\adjustbox{valign=T}{\textbf{B}}}
   \end{subfigure}
-  \begin{subfigure}[t]{.95\textwidth}
+  \begin{subfigure}[t]{.40\textwidth}
     \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth, valign=t]{Figure2B.pdf}}}
   \end{subfigure}
+    \begin{subfigure}[t]{.02\textwidth}
+    \scalebox{1}{\adjustbox{valign=T}{\textbf{C}}}
+  \end{subfigure}
+  \begin{subfigure}[t]{.40\textwidth}
+    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth, valign=t]{Figure2C.pdf}}}
+  \end{subfigure}
+
 
   \caption{(\textbf{A}) A visualisation of one generated individual vasculature.
     The haemodynamics simulations use blood pressure at the CRA and CRV as inputs.
@@ -430,6 +435,7 @@ These gradients provide an ordering of the capillaries, from high to low value, 
     which redistributes the flow to terminal veins through connection with the same resistance $\mathcal{R}$.
     In the macula, capillaries connect arteries to veins across three vascular plexi.
     (\textbf{B}) Zoomed in view of the dense macular region from (\textbf A).
+    (\textbf C) En-face view of the SVP in the temporal region and the macula (zoomed-in inset).
     SVP: superficial vascular plexus. ICP: intermediate capillary plexus. DCP: deep capillary plexus.
   }
   \label{fig:fig2}
@@ -514,7 +520,7 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
     \\
     \bottomrule
 
-    \textbf{Macrovasculature hyper-parameters} & \textbf{Description}                                                                                                                            & \begin{tabular}{ll} \textbf{Value}\\(stage 1, 2, 3)\end{tabular}\\
+    \textbf{Macrovasculature hyperparameters} & \textbf{Description}                                                                                                                            & \begin{tabular}{ll} \textbf{Value}\\(stage 1, 2, 3)\end{tabular}\\
     \midrule
     
     {$N_{terms}$}                      & {Number of terminal vessels added.} & {$200, 150, 75$}
@@ -536,7 +542,7 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
 
     \toprule
 
-    \textbf{Microvasculature hyper-parameters} & \textbf{Description}                                                                                                                            & \begin{tabular}{ll}\textbf{Value}\\(SVP, ICP, DCP)\end{tabular}
+    \textbf{Microvasculature hyperparameters} & \textbf{Description}                                                                                                                            & \begin{tabular}{ll}\textbf{Value}\\(SVP, ICP, DCP)\end{tabular}
     \\ \midrule
     {$N_{seeds}$}                      & {Number of seeds used to generate a capillary bed.}                                                                                      & {$5500, 16000, 10500$}                                                                                                                 \\ \midrule
     {$r_{capillary}$}                  & {Radius of capillaries (\SI{}{\micro\meter}).}                                                                                                       & {$2.5,2.5,2.5$}                                                                                                                      \\ \midrule
@@ -560,7 +566,7 @@ Six morphological metrics were used for comparison with OCTA:
 \end{itemize}
 Only VAD and FD were used in the ICP and DCP.
   
-For each plexus VAD was used in the model development stage to determine appropriate values for two of the hyper-parameters: $N_{terms}$ and $N_{seeds}$ (see Table~\ref{tab:parameters}).
+For each plexus VAD was used in the model development stage to determine appropriate values for two of the hyperparameters: $N_{terms}$ and $N_{seeds}$ (see Table~\ref{tab:parameters}).
 Both IVD and FD require skeletonised, pixelised images of the vasculature to be computed.
 To create those, generated macular vessels are mapped to a white canvas, then saved as binary images.
 
@@ -583,7 +589,7 @@ We derive \SI{95}{\percent} confidence intervals using bootstrapping ($N=1000$).
 
 \subsection{Sensitivity analysis}\label{sec:method-gsa}
 
-The method presented in this work relies on several hyper-parameters listed in Table~\ref{tab:parameters}.
+The method presented in this work relies on several hyperparameters listed in Table~\ref{tab:parameters}.
 The values for these parameters are either unknown (e.g., $N_{terms}$) or are subject to uncertainty in their measurement (e.g., $\delta$, $\gamma$).
 We performed a variance-based sensitivity analysis to decompose the variance in the model's output ($Var[Y]$).
 % For $d$ input parameters, the $Var[Y]$ is decomposed into fractions $V_u$ attributed to sets of inputs $X_u$ as:
@@ -678,14 +684,14 @@ On the arterial side, both velocity and flow were visually lower compared to the
     \scalebox{1}{\adjustbox{valign=T}{\textbf{A}}}
   \end{subfigure}
   \begin{subfigure}[t]{.45\textwidth}
-    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Velocity_Distribution}}}
+    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Velocity_Distribution.png}}}
   \end{subfigure}
   \hfill
   \begin{subfigure}[t]{.02\textwidth}
     \scalebox{1}{\adjustbox{valign=T}{\textbf{B}}}
   \end{subfigure}
   \begin{subfigure}[t]{.45\textwidth}
-    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Flow_Distribution}}}
+    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Flow_Distribution.png}}}
   \end{subfigure}
   \hfill
 
@@ -710,7 +716,7 @@ The correlations with the macular flow fraction were all below \SI{0.25}, indica
 
 \subsubsection{Minimum branching angle dominates structural variability}\label{sec:gsa}
 
-Figure~\ref{fig:gsa}A shows the Sobol indices for \SI{10}{} hyper-parameters, computed with the python library SALib\cite{Iwanaga_2022,Herman_2017} using $\SI{11000}{}$ simulations.
+Figure~\ref{fig:gsa}A shows the Sobol indices for \SI{10}{} hyperparameters, computed with the python library SALib\cite{Iwanaga_2022,Herman_2017} using $\SI{11000}{}$ simulations.
 The parameters were sampled uniformly within the ranges presented in Table~\ref{tab:MonteCarloSamplingRanges} using the algorithm by~\cite{Saltelli2002}.
 
 For most metrics, all parameters share a similar total order and small first order.
@@ -740,7 +746,7 @@ These results indicate that those four parameters are enough to produce a virtua
       \bottomrule
     \end{tabular}
     }
-  \caption{\label{tab:MonteCarloSamplingRanges}Ranges for the hyper-parameters for the computation of Sobol indices.}
+  \caption{\label{tab:MonteCarloSamplingRanges}Ranges for the hyperparameters for the computation of Sobol indices.}
 \end{table}
 
 \begin{figure}[ht!]
@@ -759,7 +765,7 @@ These results indicate that those four parameters are enough to produce a virtua
   \begin{subfigure}[t]{.95\textwidth}
     \includegraphics[width=\textwidth, valign=t]{ConvergenceSobolIndices}
   \end{subfigure}
-  \caption{Results of the global sensitivity analysis. The bars in (\textbf{A}) show the first order (S1) and total order (ST) Sobol indices for each hyper-parameters of the method with respect to each morphological metrics of the superficial vascular plexus. 
+  \caption{Results of the global sensitivity analysis. The bars in (\textbf{A}) show the first order (S1) and total order (ST) Sobol indices for each hyperparameters of the method with respect to each morphological metrics of the superficial vascular plexus. 
     The error bars show the \SI{95}{\%} confidence interval for each indices. Convergence of the indices was checked by plotting the indices' values with increasing number of simulations used for their computation (\textbf{B}).}
   \label{fig:gsa}
 \end{figure}
@@ -791,7 +797,7 @@ In Section~\ref{sec:validation}, we validated the models against experimental da
 % We corrected this by converting the pixels using a \SI{5.7}{\micro\metre\per\text{pixel}} conversion factor~\cite{Spectralis}.
 % The right conversion factor is difficult to estimate since resolution may vary between OCTA machines, with the curvature of the retina and with the orientation of the vessel with respect to the OCTA's lateral axes. Furthermore, OCTA quantification suffers from many drawbacks: dependence on segmentation methods~\cite{Mehta_2020}, image pre-processing~\cite{Mehta_2019}, noise~\cite{Szpernal2023} and artefacts~\cite{Yao_2020}.
 % Furthermore, capillaries in the macula are close in diameter to the resolution of standard OCTA~\cite{Chu2016}, which might lead to overestimates of vessel area.
-% This could also explain the differences, some large, in VCI, VDI, VSD and IVD if we calibrated the hyper-parameters based on a false value of VAD, leading to an unnaturally dense vasculature.
+% This could also explain the differences, some large, in VCI, VDI, VSD and IVD if we calibrated the hyperparameters based on a false value of VAD, leading to an unnaturally dense vasculature.
 The morphology of the SVP was within the ranges of values found in the literature for healthy retinas, as quantified by OCTA~\cite{Mehta_2019,Chu2016,Liu_2021,Ma2021,Agarwal_2019}.
 In the ICP and DCP, VAD were very close to values reported in an histology study~\cite{Chan2012} but IVD was larger in both plexuses compared to OCTA data~\cite{Liu_2021}.
 This was more marked in the ICP compared to the DCP.
@@ -857,7 +863,7 @@ Additional analysis is require to better understand which metrics or combination
 
 \subsection{Developing VPs with a smaller parameter space}\label{sec:disc-gsa}
 
-In Section~\ref{sec:gsaUQ} we presented the results of a global sensitivity analysis of our method's hyper-parameters on the morphology of the vasculature in the SVP.
+In Section~\ref{sec:gsaUQ} we presented the results of a global sensitivity analysis of our method's hyperparameters on the morphology of the vasculature in the SVP.
 The results were presented as first and total order Sobol indices for 10 inputs and 6 outputs in Figure~\ref{fig:gsa}A.
 These indices were extracted from a large number of simulations in order to ensure convergence, which was reached with around \SI{8000}{} simulations, as seen in Figure~\ref{fig:gsa}B.
 
@@ -882,7 +888,7 @@ Similarly, the likelihood of an arteriole or venule to bifurcate to the deeper l
 The effects of these two values has yet to be assessed.
 
 The effects of uncertainty in measurements (i.e., MAP, IOP, $r_{CRA}$ and $v_{CRA}$) on the generated vasculature remain to be quantified.
-The number of hyper-parameters is large and global sensitivity analysis show their effects on vascular metrics to be non-local.
+The number of hyperparameters is large and global sensitivity analysis show their effects on vascular metrics to be non-local.
 Therefore, directly adapting the method to generate different virtual populations may prove challenging.
 Indeed, as stated by~\cite{Allen_2016}, efficient generation of virtual populations requires knowledge of plausible ranges for the model parameters and optimising over the set of model parameters.
 Reducing the number of parameters to the most influential ones appear necessary and the sensitivity analysis presented in this study is a first step towards this goal.
@@ -906,7 +912,7 @@ Our method establishes a versatile framework for exploring the interplay between
 Designed to generate virtual populations from just four parameters and various quantitative OCTA-based measurements, the method can easily be adapted to different populations.
 
 In our study, the model generated a population of healthy eyes, revealing robust connections between macular morphology and total retinal blood flow, independent of model parameters.
-The initially large hyper-parameter space is effectively reduced to four hyper-parameters for precise population generation.
+The initially large hyperparameter space is effectively reduced to four hyperparameters for precise population generation.
 
 In future work, diverse virtual populations will be created to assess model predictions in diseased maculas.
 This approach, complemented with haemodynamics and oxygen modelling takes an essential step towards understanding the significance of vascular imaging biomarkers and their relation to retinal diseases.
