@@ -4,7 +4,6 @@
 
 \usepackage{vruler}
 \setvruler[11pt][1][1][0][0][0pt][0pt][0pt][\textheight]
-\usepackage[switch]{lineno}
 \let\oldequation\equation
 \let\oldendequation\endequation
 
@@ -66,7 +65,7 @@
 \bibliographystyle{iovs}
 
 \title{Linking Structure and Function: Image-Based Virtual Populations of the Retinal Vasculature}
-\date{\today}
+% \date{\today}
 % \author{R\'emi J. Hernandez\\ Department of Cardiovascular and Metabolic Medicine, University of Liverpool
 %   \and Yalin Zheng\\ Department of Eye and Vision Science, University of Liverpool
 %   \and Savita Madhusudhan\\ Liverpool Ophthalmic Reading Centre, St Paul's Eye Unit, Royal Liverpool University Hospitals NHS Trust
@@ -303,8 +302,9 @@ A simple principal component analysis-based statistical shape model learns the f
 The generated shapes are converted to length units using the rule of thumb for fundus photographs: $\SI{10}{\degree}\approx\SI{5}{\mm}$, where the angle describes the
 field of view of the fundus camera. The generated vessels are linked
 to the CRV or CRA accordingly and
-assume the same radius as the central retinal vessels.
+assume initially the same radius as the central retinal vessels.
 The radius of the CRA is given in Table~\ref{tab:parameters} whereas the radius of the CRV is larger by a factor $1.11$~\cite{Goldenberg2013}.
+The radii of vessels other than the CRA and CRV are updated during the generative process describe in Section~\ref{sec:CCO}.
 
 \paragraph{Arterial/venous branching trees}\label{sec:CCO}
 
@@ -323,7 +323,7 @@ In addition to the original CCO’s constraints, tree growth is
 geometrically constrained to prevent vessels from crossing the line
 that passes through the optic disc centre and the centre of the fovea,
 which separates the superior and inferior halves of the
-retina. Additionally, we used a custom probability distribution
+retina. Additionally, we used a custom log-normal probability distribution (see Table~\ref{tab:parameters})
 to select the location of new vessel segments to mimic an angiogenic
 process biased towards the fovea, while keeping the foveal avascular
 zone (FAZ) free of vessels. 
@@ -391,11 +391,11 @@ Specifically, arterioles and venules within the macular area of the SVP bifurcat
 This corresponds to the most prevalent patterns in the histology study~\cite{An2020}.
 From the SVP, \SI{30}{\percent} of the arterioles and venules were selected for bifurcation to the ICP and the bifurcation points were added in the middle of the selected vessels.
 
-All capillaries are initially given the same radius $r_{capillary}$ unless they are connected to an arteriole or venule, in which case their initial radius is twice that of other capillaries.
+All capillary segments are initially given the same radius $r_{capillary}$ unless they are connected to an arteriole or venule, in which case their initial radius is twice that of other capillaries.
 Diameter transitions at bifurcations are smoothed using the method proposed by~\cite{Linninger2013}.
 In short, the diameter of a segment becomes the average of the diameters of itself and of the parent and daughter branches.
 
-The last necessary step for haemodynamics simulation is to give direction to the capillaries create from the Voronoi diagram.
+Once all vascular segments are assigned a radius, the last necessary step for haemodynamics simulation is to find the flow direction in the capillary network created by the Voronoi diagram.
 This can be achieved by using the diffusion equation.
 Representing the vasculature as a graph, values are assigned to nodes: $1$ for arterial nodes, $0$ for venous nodes and $0.5$ for capillary nodes.
 The graph Laplacian of the vasculature is used to update the nodal values, creating gradients along edges (vessel segments).
