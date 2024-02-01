@@ -539,9 +539,15 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
     {$\theta_{min}$}                   & {Minimum bifurcation angle, in degree.} & {$60, 60, 60$}\\
     \midrule
     {$\gamma$} & {Murray's law coefficient~\cite{Murray_1926}} & {$3, 2.85, 2.85$}~\cite{Murray_1926,Takahashi2009}\\
-
+    \midrule
+    {$\eta$} & {Efficient blood viscosity (cP) used by CCO algorithm~\cite{Talou2021}} & {$0.36$}~\cite{Murray_1926,Takahashi2009}\\
+    \midrule
+    {$\l_{lim}f_r$} & Correction step factor of the CCO algorithm, see~\cite{Talou2021} for details. & {$0.8$, $0.5$, $0.5$}\\
+    \midrule
+    {$\nu$} & Perfusion area factor of the CCO algorithm, see~\cite{Talou2021} for details. & {$1$, $1$, $1$}\\
+    \midrule
+    Neighborhood factor & Parameter of the CCO algortihm, see~\cite{Talou2021} for details. & {$1$, $1$, $1$}\\
     \toprule
-
     \textbf{Microvasculature hyperparameters} & \textbf{Description}                                                                                                                            & \begin{tabular}{ll}\textbf{Value}\\(SVP, ICP, DCP)\end{tabular}
     \\ \midrule
     {$N_{seeds}$}                      & {Number of seeds used to generate a capillary bed.}                                                                                      & {$5500, 16000, 10500$}                                                                                                                 \\ \midrule
@@ -560,7 +566,7 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
 
 Six morphological metrics were used for comparison with OCTA:
 \begin{itemize}
-\item the four indices proposed by~\cite{Chu2016}, namely vessel area density (VAD), vessel skeleton density (VSD), vessel diameter index (VDI) and vessel complexity index (VCI);
+\item four of the indices proposed by~\cite{Chu2016}, namely vessel area density (VAD), vessel skeleton density (VSD), vessel diameter index (VDI) and vessel complexity index (VCI);
 \item Fractal dimension (FD), computed with a box-counting method~\cite{Ma2021};
 \item Inter-vessel distance (IVD), computed with Euclidean distance transform~\cite{Liu_2021}.
 \end{itemize}
@@ -570,11 +576,12 @@ For each plexus VAD was used in the model development stage to determine appropr
 Both IVD and FD require skeletonised, pixelised images of the vasculature to be computed.
 To create those, generated macular vessels are mapped to a white canvas, then saved as binary images.
 
-The Euclidean distance transform was used to compute IVD and a box counting method was used to estimate FD. The remaining metrics were computed from the cumulated length ($\mathcal L=\sum_{i\in\mathcal V} l_i$) and cross-section area of vessels ($\mathcal A=\sum_{i\in\mathcal V} r_il_i$) within a given plexus and inside a field-of-view of area $\mathcal X$,  as follows:
+The Euclidean distance transform was used to compute IVD and a box counting method was used to estimate FD. The remaining metrics were computed from the cumulated length ($\mathcal L=\sum_{i\in\mathcal V} l_i$) and cross-section area of vessels ($\mathcal A=\sum_{i\in\mathcal V} 2r_il_i$) within a given plexus and inside a field-of-view of area $\mathcal X$,  as follows:
 
 \begin{equation}\label{eq:OCTAmetrics}
-VAD=\frac{\mathcal A}{\mathcal X},\ VSD=\frac{\mathcal L}{\mathcal X},\ VDI=\frac{\mathcal A}{\mathcal L},\ VPI=\frac{2\mathcal L}{\mathcal X},\ VCI=\frac{(2\mathcal L)^2}{4\pi\mathcal A}
+VAD=\frac{\mathcal A}{\mathcal X},\ VSD=\frac{\mathcal L}{\mathcal X},\ VDI=\frac{\mathcal A}{\mathcal L},\ VCI=\frac{(2\mathcal L)^2}{4\pi\mathcal A}
 \end{equation}
+These metrics have been proposed to quantify the quality of vascular perfusion, complexity of the vasculature and estimate average diameter and length of the vessels on a OCTA~\cite{Chu2016}. 
 
 Vessels were assigned a stream order, or Horton-Strahler order.
 In brief, capillaries are assigned an order of 0, then moving upstream for arteries or downstream for veins, the orders are assigned as follow~\cite{An2020}:
@@ -589,7 +596,8 @@ We derive \SI{95}{\percent} confidence intervals using bootstrapping ($N=1000$).
 
 \subsection{Sensitivity analysis}\label{sec:method-gsa}
 
-The method presented in this work relies on several hyperparameters listed in Table~\ref{tab:parameters}.
+The method presented in this work relies on several hyperparameters.
+Those parameters are described in Table~\ref{tab:parameters} or in~\cite{Talou2021} for CCO-specific parameters.
 The values for these parameters are either unknown (e.g., $N_{terms}$) or are subject to uncertainty in their measurement (e.g., $\delta$, $\gamma$).
 We performed a variance-based sensitivity analysis to decompose the variance in the model's output ($Var[Y]$).
 % For $d$ input parameters, the $Var[Y]$ is decomposed into fractions $V_u$ attributed to sets of inputs $X_u$ as:
@@ -724,6 +732,7 @@ Notably, $\theta_{min}$ stands out as the most influential overall, explaining a
 Other parameters of interest include $N_{seeds}$ for the SVP, $N_{terms}$ for stage 2 and, to a lesser extent, $l_{lim}fr$.
 These results indicate that those four parameters are enough to produce a virtual population with inter-population variability, at least in the SVP.
 
+
 \begin{table}[ht!]
   \centering
   \sisetup{
@@ -735,14 +744,14 @@ These results indicate that those four parameters are enough to produce a virtua
     group-four-digits=false,
     range-phrase = \ensuremath{,{}}, % ensuring proper spacing around ,
     range-units = repeat,
-    round-mode=places,
+    % round-mode=places,
   }
   \newcommand*{\Range}[3][]{[\numrange[#1]{#2}{#3}]}
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{*{10}{l}}
       \toprule
       \begin{tabular}[c]{@{}l@{}}$N_{terms}$\\ stage 2\end{tabular} & \begin{tabular}[c]{@{}l@{}}$N_{terms}$ \\ stage 3\end{tabular} & $l_{lim}f_r$ & $\delta$ & $\eta$ & $\gamma$ & $\nu$ & $\theta_{min}$ & \begin{tabular}[c]{@{}l@{}}Neighborhood\\ factor\end{tabular} & \begin{tabular}[c]{@{}l@{}}$N_{seeds}$ \\ SVP\end{tabular} \\ \midrule
-      \Range{300}{500}{} & \Range{200}{400}{} & \Range{0.1}{0.9}{} & \Range{0.1}{0.9}{} & \Range{0.2}{0.5}{} & \Range{2}{3}{} & \Range{0}{72}{}  & \Range{0}{5}{}  & \Range{0}{5}{} & \Range{800}{1200}{} \\
+      \Range{300}{500}{} & \Range{200}{400}{} & \Range{0.1}{0.9}{} & \Range{0.1}{0.9}{} & \Range{0.2}{0.5}{} & \Range{2}{3}{} & \Range{0.1}{0.9}{} & \Range{0}{72}{} & \Range{0}{5}{} & \Range{300}{700}{} \\
       \bottomrule
     \end{tabular}
     }
@@ -875,7 +884,7 @@ Nonetheless, the first and total order indices suggests that the parameter space
 
 Interestingly, $\theta_{min}$ appeared as the most influential parameter.
 In particular, it was the sole parameter influencing VSD.
-This results confirms the hypothesis by \cite{Yao_2020} that branch geometry is correlated with VPI, which is twice VSD in Equation~(\ref{eq:OCTAmetrics}).
+This results confirms the hypothesis by \cite{Yao_2020} that branch geometry is correlated with vessel perimeter index, which would be twice VSD when computed on artificial vessels.
 The associations between structure and haemodynamics should be investigating further, perhaps with spatial metrics which can be compared with OCTA measurements~\cite{Yao_2020}.
 
 \subsection{Limitations}\label{sec:disc-limitations}
