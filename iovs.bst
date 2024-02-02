@@ -1327,8 +1327,8 @@ FUNCTION {presort}
   #1 entry.max$ substring$
   'sort.key$ :=
 }
-ITERATE {presort}
-SORT
+% ITERATE {presort} % To sort into alphabetical order, uncomment. Leave comment for sort by order of appearance
+% SORT
 STRINGS { longest.label }
 INTEGERS { number.label longest.label.width }
 FUNCTION {initialize.longest.label}
