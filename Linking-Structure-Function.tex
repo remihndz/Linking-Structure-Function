@@ -505,7 +505,7 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
   \resizebox*{!}{\dimexpr\textheight-2\baselineskip\relax}{%
     \begin{tabularx}{\textwidth}{sba}
       \toprule
-      \textbf{Parameters}                            & \textbf{Description}                                                                                                                                        & \textbf{Value} (mean$\pm$std) \\
+      \textbf{Population parameters}                            & \textbf{Description}                                                                                                                                        & \textbf{Value} (mean$\pm$std) \\
       \midrule
     {$r_{CRA}$}                        & {Radius of the central retinal artery (\SI{}{\micro\meter}).}                           & {$81\pm8$~\cite{Dorner2009}}
     \\
@@ -642,9 +642,11 @@ To quantify the uncertainty brought on the correlation coefficients, the same ex
 
 \section{Results}\label{sec:results}
 
-A virtual population of \SI{200} healthy vasculatures was generated.
-The parameters used for these simulations are listed in Table~\ref{tab:parameters}. %their distribution in the generated population is shown in Figure~\ref{fig:VP-params-distribution}.
+A virtual population of 200 healthy vasculatures was generated.
+The population parameters were sampled from normal distributions as specified in the ``population parameters'' section of Table~\ref{tab:parameters}. %their distribution in the generated population is shown in Figure~\ref{fig:VP-params-distribution}.
+Haemodynamics simulations were performed for each virtual vasculature using the virtual individual's OPP.
 The mean $\pm$ standard deviation in OPP was $\SI{45.2 \pm 4.2}{\mmHg}$ (range: \SIrange{32.83}{56.0}{\mmHg}).
+The parameter $v_{CRA}$ was not used in the haemodynamics simulations.
 % The distribution of OPP, $p_{CRA}$ and $p_{CRV}$ are shown in Figure~\ref{fig:VP-params-distribution}A.
 
 \subsection{Validation of the network structure and haemodynamics}\label{sec:validation}
