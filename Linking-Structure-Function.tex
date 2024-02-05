@@ -190,6 +190,9 @@ Additionally, global sensitivity analysis on the method's hyperparameters lays t
 % vein (CRV); a full representation of the macular microvasculature,
 % with arterioles and venules connected through a capillary bed; and a
 % haemodynamics model.
+The generative model of the retinal vasculature is presented in Section~\ref{sec:structModel}.
+A simple haemodynamic model for these vasculatures is presented in Section~\ref{sec:haemodynamicModel}.
+Sections~\ref{sec:Measurements} to~\ref{sec:methods-UQ} describe the methodology used for analysis of the models. 
 In Section~\ref{sec:validation}, we show a comparison of the microvascular structure of the model with OCTA measurements and validate the blood flow model against two independent experimental studies.
 In Section~\ref{sec:gsaUQ}, global sensitivity analysis techniques are applied to each aspect of the model to quantify the uncertainty brought about by the uncertainty in clinical parameters and model hyperparameters.
 Section~\ref{sec:discussion} contains a discussion of the results, while Section~\ref{sec:conclusion} summarises the conclusions and future perspectives.
@@ -207,10 +210,9 @@ model.
   \begin{subfigure}[t]{.02\textwidth}
     \scalebox{1}{\adjustbox{valign=T}{\textbf{A}}}
   \end{subfigure}
-  \begin{subfigure}[t]{.6\textwidth}
+  \begin{subfigure}[t]{.58\textwidth}
     \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth, valign=t]{Figure1A.pdf}}}
   \end{subfigure}
-%  \hfill
   \\
   \begin{subfigure}[t]{.02\textwidth}
     \scalebox{1}{\adjustbox{valign=T}{\textbf{B}}}
@@ -218,9 +220,8 @@ model.
   \begin{subfigure}[t]{.58\textwidth}
     \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth, valign=t]{Figure1B.pdf}}}
   \end{subfigure}
-
   \caption{Architecture of the retina. (\textbf{A}) Landmarks of the retina on a \SI{45}{\degree} field-of-view colour fundus photograph from the DRIVE dataset~\cite{Staal_2004}.
-  (\textbf{B}) The three capillary layers of the macula imaged with histology. Image from the work of~\cite{An2020}, available under a CC BY-NC-ND license.}
+  (\textbf{B}) The three capillary layers of the macula imaged with histology. White arrows show connecting vessels between plexi. Image adapted from the work of~\cite{An2020}, available under a CC BY-NC-ND license.}
   \label{fig:1}
 \end{figure}
 
@@ -255,7 +256,7 @@ vessels (two veins, two arteries) that branch directly from the
 CRA and CRV and extend towards the superotemporal and inferotemporal quadrant of 
 the retina, as shown on Figure~\ref{fig:1}A.
 Vessel centreline segmentations, from their branching at
-the level of the optic disc to the boundary of the visible retina,
+the level of the optic disc to the boundary of the fundus photograph (orange area in Figure~\ref{fig:1}A),
 were extracted from 8 colour fundus photographs of eyes without retinopathy and centred at the fovea.
 % Images were excluded if the arteries and veins could not be
 % confidently differentiated or if the eye presented pathologies, as
@@ -298,7 +299,7 @@ For images of right eyes, curves are reflected across the y-axis so that all sha
 % shapes, one can create a new, unique shape x using $x=\bar x_j + P_jb$
 % where $b\sim\mathcal N(0,diag(\lambda_{j,i}, i=1,...,l_j))$. The
 % resulting $m_j$ points are interpolated using centripetal Catmull-Rom splines~\cite{Catmull_1974} before being used in the next steps.
-A simple principal component analysis-based statistical shape model learns the features of all four temporal arcade vessels (see Supplementary Material S1).
+A simple principal component analysis-based statistical shape model learns the shape of all four temporal arcade vessels based on the location of inflexion points along the vessels (see Supplementary Material S1).
 The generated shapes are converted to length units using the rule of thumb for fundus photographs: $\SI{10}{\degree}\approx\SI{5}{\mm}$, where the angle describes the
 field of view of the fundus camera. The generated vessels are linked
 to the CRV or CRA accordingly and
@@ -308,8 +309,8 @@ The radii of vessels other than the CRA and CRV are updated during the generativ
 
 \paragraph{Arterial/venous branching trees}\label{sec:CCO}
 
-From each output of the statistical shape model, a pair of trees, one
-arterial and one venous, is generated.
+The statistical shape model produces pairs of temporal arcades: one arterial linked to the CRA, one venous linked to the CRV.
+This section describes how an arterial and a venous tree is generated for each arcade.
 
 At this stage, trees are structured branching trees using a
 space-filling algorithm. The algorithm is a modification of the
@@ -331,15 +332,14 @@ Indeed, the fovea has higher concentration
 of cells, and therefore more metabolic needs, compared to the rest of
 the retina~\cite{Zouache2022}.
 The CCO is applied in three stages, within three circular regions: in
-a disk of radius $r_{retina}$, in a annulus with radii $r_{parafovea}$ and $r_{perifovea}$
+a disk of radius $r_{retina}$ (i.e., the entire computational domain), in a annulus with radii $r_{parafovea}$ and $r_{perifovea}$
 and finally in a disk of radius $r_{parafovea}$
 (see Figure~\ref{fig:1}).
 
 To simulate growth biased towards the fovea while keeping the FAZ free
 of vessels, the coordinates of a segment endpoint are given by
-$(x,y)=(r\cos\theta, r\sin\theta)$, where $\theta$ follows a uniform
-distribution over the interval $[0,2\pi)$ and $r$ follows a log-normal
-distribution (see Table~\ref{tab:parameters}). Arterio-venous
+$(x,y)=(r\cos\theta, r\sin\theta)$, where $\theta$ is the opening angle and follows a uniform
+distribution over the interval $[0,2\pi)$ and $r$ is the distance to the center of the macula and follows a log-normal distribution (see Table~\ref{tab:parameters}). Arterio-venous
 networks of the superficial vascular plexus are generated in three
 steps: 1) the CCO is applied to create a backbone of larger arterioles
 and venules from the arterial and venous arcades. The arterial and
@@ -480,6 +480,7 @@ and
   C = \left(0.8 + e^{-0.075D}\right)\left(-1 + \left(1+10^{-11}D^{12}\right)^{-1}\right) + \left(1+10^{-11}D^{12}\right)^{-1}
 \end{equation}
 Discharge haematocrit is kept constant at \SI{45}{\percent} in this work.
+Considering the relatively small caliber of retinal vessels, equations~(\ref{eq:poiseuille})~(\ref{eq:C_viscosity}) apply to the entire vasculature~\cite{Secomb2013}.
 
 In the macular area, the vasculature is fully connected, with
 arterioles connecting to venules through capillaries, and therefore, no boundary conditions are required.
@@ -516,7 +517,7 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
     \\ \midrule
     {$IOP$}                            & {Intraocular pressure (\SI{}{\mmHg}).}                                                                                                           & {$11.1\pm2.1$~\cite{Samsudin2016}}
     \\ \midrule
-    {$\mathcal R$}                     & {Resistance of vessels linked with the peripheral vascular compartment (\SI[per-mode=symbol]{}{\mmHg\second\per\mL}).}   & {$10^6$}
+    {$\mathcal R$}                     & {Resistance of vessels linked with the peripheral vascular compartment (\SI[per-mode=symbol]{}{\mmHg\second\per\mL}).}   & {$5\times10^5$}
     \\
     \bottomrule
 
@@ -694,18 +695,18 @@ On the arterial side, both velocity and flow were visually lower compared to the
     \scalebox{1}{\adjustbox{valign=T}{\textbf{A}}}
   \end{subfigure}
   \begin{subfigure}[t]{.45\textwidth}
-    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Velocity_Distribution.png}}}
+    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Velocity_Distribution.pdf}}}
   \end{subfigure}
   \hfill
   \begin{subfigure}[t]{.02\textwidth}
     \scalebox{1}{\adjustbox{valign=T}{\textbf{B}}}
   \end{subfigure}
   \begin{subfigure}[t]{.45\textwidth}
-    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Flow_Distribution.png}}}
+    \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Flow_Distribution.pdf}}}
   \end{subfigure}
   \hfill
 
-  \caption{\label{fig:Flow-Velocity-dist}Blood velocity (\textbf{A}) and volumetric blood flow rate (\textbf{B}) distributions against vessel diameter in the virtual vasculatures compared with two independent experimental studies\cite{DoblhoffDier2014,Riva1985}.}
+  \caption{\label{fig:Flow-Velocity-dist}Blood velocity (\textbf{A}) and volumetric blood flow rate (\textbf{B}) distributions against vessel diameter in the virtual vasculatures compared with two independent experimental studies\cite{DoblhoffDier2014,Riva1985}. Blood vessels from the simulations have were been into hexagons. Colormap show the probability density across 200 virtual individuals.}
 \end{figure}
 
 \subsection{Four structural variables are strongly linked to retinal function}\label{sec:StructureAndFunction}
@@ -786,7 +787,7 @@ These results indicate that those four parameters are enough to produce a virtua
 The results presented in Section~\ref{sec:results} rely on several hypotheses and parameters which introduce a degree of uncertainty.
 Across all scenarios, the mean retinal blood flow varied between \SI{-26.8}{\percent} and \SI{39.5}{\percent} of baseline values whereas macular flow fraction varied between \SI{-29.6}{\percent} and \SI{22.9}{\percent}.
 The results for each scenario tested are shown in Table~S1.
-Variation in OPP had almost no effects on macular flow fraction (Pearson's $R^2<10^{-3}$ for all values of $\mathcal R$) but was linearly correlated with retinal blood flow ($R^2>0.98$ for all values of $\mathcal R$).
+Variation in OPP had almost no effects on macular flow fraction (Pearson's $R^2<10^{-3}$ for all values of $\mathcal R$) but was linearly correlated with retinal blood flow ($R^2>0.89$ for all values of $\mathcal R$).
 The coefficients are given for all scenarios in Table~S2.
 
 \section{Discussion}\label{sec:discussion}
@@ -854,7 +855,7 @@ Increasing $\mathcal R$ is similar to gradually closing the connections to/from 
 Therefore, flow is shunted towards the macula and macular flow fraction increases.
 Decreasing $\mathcal R$ has an opposite effect, however, the macular flow fraction will eventually reach a plateau when the CRA reaches its maximum capacity in term of blood flow: regardless of the resistance of paths outside the macula, blood will flow through the macula and total retinal blood flow is bounded by physical constraints.
 Indeed, in our model, for a given OPP, flow in the CRA is theoretically bounded by the radius and length of the CRA according to Equation~(\ref{eq:poiseuille}).
-The same effect explains the non-symmetrical changes in total retinal blood flow as $\mathcal R$ is decreased (see Figure~S4). %\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}). 
+The same effect explains the non-symmetrical changes in total retinal blood flow as $\mathcal R$ is decreased (see Figure~S1). %\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}). 
 
 \subsection{Associations between structure and function}\label{sec:disc-results}
 
@@ -865,9 +866,9 @@ Interestingly, VAD in the ICP showed a moderate positive correlation with retina
 However, VAD in the DCP and in the combined ICP-DCP complex, as well as FD in the ICP-DCP complex, did not show any significant correlations.
 None of the tested metrics were significantly associated with the fraction of flow transiting through the macula.
 Uncertainty quantification showed that those results were independent of the haemodynamics model's parameters.
-As shown in Figure~S3, varying OPP does not have any effects on the Spearman correlation coefficients.
+As shown in Figure~S2, varying OPP does not have any effects on the Spearman correlation coefficients.
 Increasing the value of $\mathcal R$ shifts the value of the coefficients for macular flow fraction towards the coefficients for total retinal blood flow.
-When $\mathcal R$ becomes large, macular flow becomes close to retinal flow, as seen in Figure~S4, therefore increasing the impact of macular morphology on the overall system. 
+When $\mathcal R$ becomes large, macular flow becomes close to retinal flow, as seen in Figure~S1, therefore increasing the impact of macular morphology on the overall system. 
 
 In Section~\ref{sec:StructureAndFunction}, the correlation coefficients between morphological metrics and haemodynamics were obtained from one-to-one comparisons and therefore do not capture possible interplay between morphological metrics.
 Additional analysis is require to better understand which metrics or combination of metrics are strong predictors of blood flow.
