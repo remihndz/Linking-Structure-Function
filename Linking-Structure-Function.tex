@@ -64,7 +64,7 @@
 \usepackage[super, sort]{natbib}
 \bibliographystyle{iovs}
 
-\title{Linking Structure and Function: Image-Based Virtual Populations of the Retinal Vasculature}
+\title{Linking Vascular Structure and Function: Image-Based Virtual Populations of the Retina}
 % \date{\today}
 % \author{R\'emi J. Hernandez\\ Department of Cardiovascular and Metabolic Medicine, University of Liverpool
 %   \and Yalin Zheng\\ Department of Eye and Vision Science, University of Liverpool
@@ -131,7 +131,8 @@ particular neovascular diseases such as neovascular age-related
 macular degeneration, proliferative diabetic retinopathy or retinal
 vein occlusion which are characterised by pathological growth of blood
 vessels through angiogenesis~\cite{Medina_2016}.
-Hypoxia is a known trigger of angiogenesis and targeting ischaemia-induced angiogenic pathways might improve treatment outcomes~\cite{UsuiOuchi2020}.
+While angiogenesis and VEGF are essential to the development of the vascular and in maintaining physiological conditions, the upregulation of VEGF is involved with the development of pathological neovasculature~\cite{Fruttiger_2007,Nishinaka_2018}. 
+Hypoxia is a known upregulating factor of VEGF and targeting ischaemia-induced angiogenic pathways might improve treatment outcomes~\cite{UsuiOuchi2020}.
 
 Retinal oxymeters provide a way to analyse oxygen saturation in some of the larger blood vessels of the superficial retina.
 However, experimental measurements in the tissue and in the capillaries of the retina remain difficult or invasive, therefore there is still uncertainty regarding the role of hypoxia in the pathogenesis of neovascular diseases.
@@ -173,14 +174,16 @@ synthetic data for deep learning applications.
 Vascular morphology has been established as a biomarker for the development, progression and prognosis of several retinal diseases~\cite{Balaratnasingam_2023,Yao_2020}, including diabetic retinopathy~\cite{Garg2022,Hein_2023} and age-related macular degeneration~\cite{Told2023,Narnaware_2023}.
 Changes in these metrics may indicate impairment to retinal or macular blood flow, which could contribute to the development of the disease.
 However, quantifying these impairments in a sufficiently large population is challenging with conventional experimental techniques.
+
 The modelling framework presented here can quantify these impairments in large virtual populations.
 The model captures the complexity of the macular vasculature and is able to link imaging biomarkers with physiological parameters.
-Our study sought to: 1) develop a method for generating cohesive vascular networks in the retina and macula, adaptable to virtual population generation;
-2) propose a mathematical model of blood flow in the virtual vasculatures;
-3) quantify associations between macular vascular morphology and haemodynamics parameters in a healthy retinal population.
-Our method constructs a vascular network spanning the superficial layer of the temporal retina, originating from the central retinal artery (CRA) and terminating at the central retinal vein (CRV).
+Our study sought to: 1) develop a method for generating coherent vascular networks in the retina and macula, adaptable to virtual population generation, described in Section~\ref{sec:structModel};
+2) propose a mathematical model of blood flow in the virtual vasculatures, detailed in Section~\ref{sec:haemodynamicModel};
+3) quantify associations between macular vascular morphology and haemodynamics parameters in a healthy retinal population (Section~\ref{sec:Measurements});
 In the macula, all three capillary layers are modelled.
-Additionally, global sensitivity analysis on the method's hyperparameters lays the foundation for generating tailored retinal populations based on the distribution of morphological metrics.
+In Section~\ref{sec:validation} we compare the microvascular structure of the model with OCTA measurements and validate the blood flow model against two independent experimental studies.
+Additionally, global sensitivity analysis on the method's hyperparameters, detailed in Section~\ref{sec:method-gsa}, lays the foundation for generating tailored retinal populations based on the distribution of morphological metrics and the uncertainty quantification results presented in Section~\ref{sec:methods-UQ} show the robustness of our model's predictions. 
+Section~\ref{sec:discussion} contains a discussion of the results, while Section~\ref{sec:conclusion} summarises the conclusions and future perspectives.
 
 % This paper presents a framework for generating virtual populations of
 % the microvasculature of the macula, using a few clinical measurements as
@@ -190,12 +193,12 @@ Additionally, global sensitivity analysis on the method's hyperparameters lays t
 % vein (CRV); a full representation of the macular microvasculature,
 % with arterioles and venules connected through a capillary bed; and a
 % haemodynamics model.
-The generative model of the retinal vasculature is presented in Section~\ref{sec:structModel}.
-A simple haemodynamic model for these vasculatures is presented in Section~\ref{sec:haemodynamicModel}.
-Sections~\ref{sec:Measurements} to~\ref{sec:methods-UQ} describe the methodology used for analysis of the models. 
-In Section~\ref{sec:validation}, we show a comparison of the microvascular structure of the model with OCTA measurements and validate the blood flow model against two independent experimental studies.
-In Section~\ref{sec:gsaUQ}, global sensitivity analysis techniques are applied to each aspect of the model to quantify the uncertainty brought about by the uncertainty in clinical parameters and model hyperparameters.
-Section~\ref{sec:discussion} contains a discussion of the results, while Section~\ref{sec:conclusion} summarises the conclusions and future perspectives.
+% The generative model of the retinal vasculature is presented in Section~\ref{sec:structModel}.
+% A simple haemodynamic model for these vasculatures is presented in Section~\ref{sec:haemodynamicModel}.
+% Sections~\ref{sec:Measurements} to~\ref{sec:methods-UQ} describe the methodology used for analysis of the models. 
+% In Section~\ref{sec:validation}, we show a comparison of the microvascular structure of the model with OCTA measurements and validate the blood flow model against two independent experimental studies.
+% In Section~\ref{sec:gsaUQ}, global sensitivity analysis techniques are applied to each aspect of the model to quantify the uncertainty brought about by the uncertainty in clinical parameters and model hyperparameters.
+% Section~\ref{sec:discussion} contains a discussion of the results, while Section~\ref{sec:conclusion} summarises the conclusions and future perspectives.
 
 \section{Methods}\label{sec:methods}
 
@@ -319,6 +322,7 @@ by~\cite{Talou2021}. With the CCO, trees are grown to minimise the tree’s
 total volume while, for each addition of vessel segments,
 keeping a constant pressure drop from
 inlet to outlet and satisfying several geometrical constraints.
+These constraints affect the radius of branches~\cite{Murray_1926}, the symmetry of branches and the aspect ratio of new segments~\cite{Talou2021}.
 
 In addition to the original CCO’s constraints, tree growth is
 geometrically constrained to prevent vessels from crossing the line
@@ -567,7 +571,7 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
 
 Six morphological metrics were used for comparison with OCTA:
 \begin{itemize}
-\item four of the indices proposed by~\cite{Chu2016}, namely vessel area density (VAD), vessel skeleton density (VSD), vessel diameter index (VDI) and vessel complexity index (VCI);
+\item four of the indices proposed by~\cite{Chu2016}, namely vessel area density (VAD), vessel skeleton density (VSD), vessel diameter index (VDI) and vessel complexity index (VCI), computed according to Equation~\ref{eq:OCTAmetrics};
 \item Fractal dimension (FD), computed with a box-counting method~\cite{Ma2021};
 \item Inter-vessel distance (IVD), computed with Euclidean distance transform~\cite{Liu_2021}.
 \end{itemize}
@@ -582,7 +586,8 @@ The Euclidean distance transform was used to compute IVD and a box counting meth
 \begin{equation}\label{eq:OCTAmetrics}
 VAD=\frac{\mathcal A}{\mathcal X},\ VSD=\frac{\mathcal L}{\mathcal X},\ VDI=\frac{\mathcal A}{\mathcal L},\ VCI=\frac{(2\mathcal L)^2}{4\pi\mathcal A}
 \end{equation}
-These metrics have been proposed to quantify the quality of vascular perfusion, complexity of the vasculature and estimate average diameter and length of the vessels on a OCTA~\cite{Chu2016}. 
+These metrics have been proposed as proxys for the average caliber, length and overall complexity and quality of the vasculature on an OCTA~\cite{Chu2016}.
+% These metrics have been proposed to quantify the quality of vascular perfusion, complexity of the vasculature and estimate average diameter and length of the vessels on a OCTA~\cite{Chu2016}. 
 
 Vessels were assigned a stream order, or Horton-Strahler order.
 In brief, capillaries are assigned an order of 0, then moving upstream for arteries or downstream for veins, the orders are assigned as follow~\cite{An2020}:
