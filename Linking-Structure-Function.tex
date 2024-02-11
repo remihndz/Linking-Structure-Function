@@ -119,7 +119,7 @@ The retina is a highly oxygen-dependent, complex band of tissue at the back of t
 It requires close interplay between many different cell types and supporting structures, including a complex vascular system~\cite{Hernandez2023}.
 As a result, the retina is sensitive to small changes which may lead to loss of visual functions.
 \textit{In silico} modelling has the potential to offer insight into the complex interactions between the retinal environment and the underlying causes of retinal diseases.
-In particular virtual populations and \textit{in silico} clinical trials are a promising way to enhance basic research and clinical trials~\cite{Hernandez2023}.
+In particular, virtual populations and \textit{in silico} clinical trials are a promising way to enhance basic research and clinical trials~\cite{Hernandez2023}.
 Optical coherence tomography angiography (OCTA) is a non-invasive, new imaging modality that offers three dimensional, high resolution angiograms of the macula, which is the central-most area of the retina.
 Several microvascular metrics, such as vessel density and fractal dimension, have been suggested to quantify the quality of the microvasculature on OCTAs~\cite{Chu2016}.
 Using those metrics, several microvascular changes have been not only linked with ageing and diseased retinae~\cite{ElBouri_2021,Ma2021,Trinh_2019,Told2023,Xue_2021} but also with cerebrovascular changes and cardiovascular diseases~\cite{Pleouras_2021,Graff_2021,LopezCuenca_2022}.
@@ -336,7 +336,7 @@ Indeed, the fovea has higher concentration
 of cells, and therefore more metabolic needs, compared to the rest of
 the retina~\cite{Zouache2022}.
 The CCO is applied in three stages, within three circular regions: in
-a disk of radius $r_{retina}$ (i.e., the entire computational domain), in a annulus with radii $r_{parafovea}$ and $r_{perifovea}$
+a disk of radius $r_{retina}$ (i.e., the entire computational domain), in an annulus with radii $r_{parafovea}$ and $r_{perifovea}$
 and finally in a disk of radius $r_{parafovea}$
 (see Figure~\ref{fig:1}).
 
@@ -450,7 +450,7 @@ These gradients provide an ordering of the capillaries, from high to low value, 
 Blood is modelled as an incompressible, Newtonian fluid flowing in a
 network of connected tubes by the Hagen-Poiseuille equation.
 This modelling framework considers the
-vasculature as a arrangement of connected, straight tubes across which
+vasculature as an arrangement of connected, straight tubes across which
 pressure drop $\Delta p$, vascular resistance $R$ and volumetric blood
 flow $Q$ are related by:
 \begin{equation}
@@ -624,7 +624,8 @@ We performed a variance-based sensitivity analysis to decompose the variance in 
 % is the contribution of the interactions between $X_i$ and $X_j$.
 % For higher order interactions (e.g., $V_{i,j,k}$), similar expressions can be built.
 Sobol indices summarise the importance of sets of inputs with indices between $0$ and $1$~\cite{Saltelli2008}.
-In this work, we report first ($S_i$) and total ($S_{T_i}$) order indices, which are often enough to understand parameter importance~\cite{Saltelli2008}, defined as:
+In this work, we report first ($S_i$) and total ($S_{T_i}$) order indices, which are often enough to understand parameter importance~\cite{Saltelli2008}.
+% , defined as:
 % \begin{equation}
 %   \label{eq:SobolIndices}
 %   \begin{aligned}
@@ -717,7 +718,7 @@ On the arterial side, both velocity and flow were visually lower compared to the
 \subsection{Four structural variables are strongly linked to retinal function}\label{sec:StructureAndFunction}
 
 We next look to understand how the morphology of the macular vasculature affects the haemodynamics of the retina and of the macula using our model.
-Figure~\ref{fig:SpearmanCorrelations} shows the Spearman correlation coefficients for each variables.
+Figure~\ref{fig:SpearmanCorrelations} shows the Spearman correlation coefficients for each variable.
 Vertical lines show the threshold typically used for a correlation to be considered moderate (dotted lines) and strong (dashed lines).
 For the healthy virtual cohort, the model found only VAD, VDI, VCI and FD of the SVP to be predictors of retinal blood flow.
 The correlations with the macular flow fraction were all below \SI{0.25}, indicating weak or no correlations.
@@ -876,7 +877,7 @@ Increasing the value of $\mathcal R$ shifts the value of the coefficients for ma
 When $\mathcal R$ becomes large, macular flow becomes close to retinal flow, as seen in Figure~S1, therefore increasing the impact of macular morphology on the overall system. 
 
 In Section~\ref{sec:StructureAndFunction}, the correlation coefficients between morphological metrics and haemodynamics were obtained from one-to-one comparisons and therefore do not capture possible interplay between morphological metrics.
-Additional analysis is require to better understand which metrics or combination of metrics are strong predictors of blood flow.
+Additional analysis is required to better understand which metrics or combination of metrics are strong predictors of blood flow.
 
 \subsection{Developing VPs with a smaller parameter space}\label{sec:disc-gsa}
 
@@ -886,9 +887,9 @@ These indices were extracted from a large number of simulations in order to ensu
 
 The total orders indices were globally similar for all parameters and brought little explanation of the importance of parameters.
 Computing second order indices may be necessary to reduce the number of parameters before attempting to generate a different population or to pursue uncertainty quantification.
-However, second order indices require larger number of simulations to achieve convergence with Monte-Carlo methods and are therefore expensive to compute~\cite{Saltelli2008}.
+However, second order indices require a larger number of simulations to achieve convergence with Monte-Carlo methods and are therefore expensive to compute~\cite{Saltelli2008}.
 In this case, developing a surrogate model (e.g., polynomial chaos expansion) might be required~\cite{Saltelli2008}.
-Nonetheless, the first and total order indices suggests that the parameter space can be reduced to as little as four parameters, depending on which morphological metric is deemed more important.
+Nonetheless, the first and total order indices suggest that the parameter space can be reduced to as little as four parameters, depending on which morphological metric is deemed more important.
 
 Interestingly, $\theta_{min}$ appeared as the most influential parameter.
 In particular, it was the sole parameter influencing VSD.
