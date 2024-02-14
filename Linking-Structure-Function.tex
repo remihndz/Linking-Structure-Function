@@ -692,7 +692,7 @@ Blood velocity in the CRA was also lower in the model compared to the average of
 Blood velocity along the vasculature is compared with experimental studies~\cite{DoblhoffDier2014,Riva1985} in Figure~\ref{fig:Flow-Velocity-dist}A.
 Additionally, these studies reported volumetric blood flow rates against diameter.
 These distributions are compared with the model's in Figure~\ref{fig:Flow-Velocity-dist}B.
-On the venous circulation, model predictions of flow and velocity were coherent with experimental data~\cite{DoblhoffDier2014,Riva1985}.
+In the venous circulation, model predictions of flow and velocity were coherent with experimental data.
 On the arterial side, both velocity and flow were visually lower compared to the same studies.
 
 \begin{figure}[ht!]
@@ -842,6 +842,8 @@ We assumed that the diameters were those of vessel lumen, which could lead to an
 In experimental studies, the same relation between flow and radius is assumed and blood flow is estimated from velocity $v$ and diameter $D$ measurements as $Q=v\pi D^2/4$.
 Therefore, even a small measurement error in vessel diameter combined with error in measurement in velocity still results in large deviations from the true blood flow.
 Both measurements are challenging and prone to errors~\cite{Leitgeb_2014}.
+To test this hypothesis, we reduced by \SI{20}{\percent} the lumen diameter of arteries larger than \SI{100}{\mu\metre} in diameter and ran the haemdoynamics simulations for the entire population.
+The velocity and flow distribution for this experiment are shown in Figure~S1 and show a good agreement with the experimental data.
 In addition, all parameters in our virtual populations were sampled from independent normal distributions which is likely an incorrect assumption as, e.g., vessel diameter is likely to be correlated with arterial pressure and IOP~\cite{Dziedziak_2022}.
 % This is exemplified by the three patients with the largest blood flows in our virtual cohort which were between two and three times larger than the average (see Figure~\ref{fig:sup-TRBF}).
 % These patients shared a similar CRA radius, around \SI{28}{\percent} larger than the cohort's average.
@@ -861,7 +863,7 @@ Increasing $\mathcal R$ is similar to gradually closing the connections to/from 
 Therefore, flow is shunted towards the macula and macular flow fraction increases.
 Decreasing $\mathcal R$ has an opposite effect, however, the macular flow fraction will eventually reach a plateau when the CRA reaches its maximum capacity in term of blood flow: regardless of the resistance of paths outside the macula, blood will flow through the macula and total retinal blood flow is bounded by physical constraints.
 Indeed, in our model, for a given OPP, flow in the CRA is theoretically bounded by the radius and length of the CRA according to Equation~(\ref{eq:poiseuille}).
-The same effect explains the non-symmetrical changes in total retinal blood flow as $\mathcal R$ is decreased (see Figure~S1). %\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}). 
+The same effect explains the non-symmetrical changes in total retinal blood flow as $\mathcal R$ is decreased (see Figure~S2). %\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}). 
 
 \subsection{Associations between structure and function}\label{sec:disc-results}
 
@@ -872,9 +874,9 @@ Interestingly, VAD in the ICP showed a moderate positive correlation with retina
 However, VAD in the DCP and in the combined ICP-DCP complex, as well as FD in the ICP-DCP complex, did not show any significant correlations.
 None of the tested metrics were significantly associated with the fraction of flow transiting through the macula.
 Uncertainty quantification showed that those results were independent of the haemodynamics model's parameters.
-As shown in Figure~S2, varying OPP does not have any effects on the Spearman correlation coefficients.
+As shown in Figure~S3, varying OPP does not have any effects on the Spearman correlation coefficients.
 Increasing the value of $\mathcal R$ shifts the value of the coefficients for macular flow fraction towards the coefficients for total retinal blood flow.
-When $\mathcal R$ becomes large, macular flow becomes close to retinal flow, as seen in Figure~S1, therefore increasing the impact of macular morphology on the overall system. 
+When $\mathcal R$ becomes large, macular flow becomes close to retinal flow, as seen in Figure~S2, therefore increasing the impact of macular morphology on the overall system. 
 
 In Section~\ref{sec:StructureAndFunction}, the correlation coefficients between morphological metrics and haemodynamics were obtained from one-to-one comparisons and therefore do not capture possible interplay between morphological metrics.
 Additional analysis is required to better understand which metrics or combination of metrics are strong predictors of blood flow.
