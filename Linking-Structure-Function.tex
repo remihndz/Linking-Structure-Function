@@ -98,7 +98,7 @@
   The correlations between total retinal blood flow and macular flow fraction and vascular morphology are derived as Spearman rank coefficients and uncertainty from input parameters is quantified.
   
   \textbf{Results:} A virtual cohort of 200 healthy vasculatures were generated.
-  Mean and standard deviation for retinal blood flow and macular flow ratio were $\SI[per-mode=symbol]{19.15\pm7.34}{\micro\litre\per\minute}$ and $\SI{4.52\pm1.19}{\percent}$.
+  Mean and standard deviation for retinal blood flow and macular flow fraction were $\SI[per-mode=symbol]{19.15\pm7.34}{\micro\litre\per\minute}$ and $\SI{4.52\pm1.19}{\percent}$.
   Retinal blood flow was correlated with vessel area density, vessel diameter index, fractal dimension and vessel calibre index.
   The macular flow fraction was not correlated with any morphological metrics.
 
@@ -126,8 +126,7 @@ Using those metrics, several microvascular changes have been not only linked wit
 For the brain and the heart, virtual populations have been developed, but similar work is yet to be done for the retinal vasculature or for the linked cerebral-retinal vasculature~\cite{Hernandez2023}.
 
 Alterations to the retinal and choroidal vasculature are expected to negatively affect the perfusion of the retina.
-Ischaemia and hypoxia are likely involved in the pathogenesis of several retinal diseases, in
-particular neovascular diseases such as neovascular age-related
+Ischaemia and hypoxia are likely involved in the pathogenesis of several retinal diseases, particularly in neovascular diseases such as neovascular age-related
 macular degeneration, proliferative diabetic retinopathy or retinal
 vein occlusion which are characterised by pathological growth of blood
 vessels through angiogenesis~\cite{Medina_2016}.
@@ -140,7 +139,7 @@ Furthermore, it also remains unclear
 how changes in microvascular metrics computed on OCTAs relate to the
 quality of blood perfusion. Computational models of the retina and its
 vasculature, combined with mathematical models of haemodynamics and
-oxygen transport, can help to link structure and function.
+oxygen transport, can help to link vascular structure and function.
 
 Retinal haemodynamics and oxygenation have received considerable
 attention from the modelling community in recent
@@ -484,7 +483,7 @@ and
   C = \left(0.8 + e^{-0.075D}\right)\left(-1 + \left(1+10^{-11}D^{12}\right)^{-1}\right) + \left(1+10^{-11}D^{12}\right)^{-1}
 \end{equation}
 Discharge haematocrit is kept constant at \SI{45}{\percent} in this work.
-Considering the relatively small caliber of retinal vessels, equations~(\ref{eq:poiseuille})~(\ref{eq:C_viscosity}) apply to the entire vasculature~\cite{Secomb2013}.
+Considering the relatively small caliber of retinal vessels, equations~(\ref{eq:poiseuille})-(\ref{eq:C_viscosity}) apply to the entire vasculature~\cite{Secomb2013}.
 
 In the macular area, the vasculature is fully connected, with
 arterioles connecting to venules through capillaries, and therefore, no boundary conditions are required.
@@ -641,10 +640,11 @@ Further details can be found in the Supplementary material.
 
 Uncertainty quantification aims at assessing the credibility of a model's prediction~\cite{ASME2018,Viceconti2021}.
 For the haemodynamics model, uncertainty stems from two parameters, namely OPP (Equation~(\ref{eq:OPP})) and $\mathcal R$.
-To quantify the uncertainty brought on the correlation coefficients, the same experiment was reproduced for nine different scenarios where:
+To quantify the uncertainty brought on the correlation coefficients, the same experiment was reproduced for $54$ different scenarios where:
 \begin{itemize}
-\item the resistance parameter $\mathcal R$ was set to \SI[per-mode=symbol]{1e5}{\mmHg\second\per\mL}, \SI[per-mode=symbol]{5e5}{\mmHg\second\per\mL} and \SI[per-mode=symbol]{1e6}{\mmHg\second\per\mL}
-\item OPP was set to \SI{80}{\percent}, \SI{100}{\percent} and \SI{120}{\percent} of its baseline value.
+\item the resistance parameter $\mathcal R$ was set to \SI[per-mode=symbol]{1e5}{\mmHg\second\per\mL}, \SI[per-mode=symbol]{5e5}{\mmHg\second\per\mL} and \SI[per-mode=symbol]{1e6}{\mmHg\second\per\mL},
+\item OPP was set to \SI{80}{\percent}, \SI{100}{\percent} and \SI{120}{\percent} of its baseline value,
+\item the fraction $\alpha$ (see Section~\ref{sec:microvasculature}) was varied between $0.1$ and $0.7$ by increments of $0.1$.
 \end{itemize}
 
 \section{Results}\label{sec:results}
@@ -791,10 +791,11 @@ These results indicate that those four parameters are enough to produce a virtua
 \subsubsection{Macular flow fraction is independent of OPP}\label{sec:UQ}
 
 The results presented in Section~\ref{sec:results} rely on several hypotheses and parameters which introduce a degree of uncertainty.
-Across all scenarios, the mean retinal blood flow varied between \SI{-26.8}{\percent} and \SI{39.5}{\percent} of baseline values whereas macular flow fraction varied between \SI{-29.6}{\percent} and \SI{22.9}{\percent}.
-The results for each scenario tested are shown in Table~S1.
-Variation in OPP had almost no effects on macular flow fraction (Pearson's $R^2<10^{-3}$ for all values of $\mathcal R$) but was linearly correlated with retinal blood flow ($R^2>0.89$ for all values of $\mathcal R$).
-The coefficients are given for all scenarios in Table~S2.
+Across all scenarios, the mean total retinal blood flow varied between \SI{-30.0}{\percent} and \SI{38.3}{\percent} of baseline values whereas macular flow fraction varied between \SI{-47.1}{\percent} and \SI{12.9}{\percent}.
+The results for the nine scenarios where $\alpha$ is kept at its baseline value are shown in Table~S1.
+Variation in OPP had almost no effects on macular flow fraction (Pearson's ${R^2<10^{-3}}$ for all values of $\mathcal R$) but was linearly correlated with total retinal blood flow (${R^2>0.89}$ for all values of $\mathcal R$).
+The coefficients are given for those nine scenarios in Table~S2.
+Parameter $\alpha$ was not correlated with either of the haemodynamics variable (${R^2<10^{-2}}$ for all variations of OPP and $\mathcal R$). 
 
 \section{Discussion}\label{sec:discussion}
 
@@ -865,7 +866,7 @@ Decreasing $\mathcal R$ has an opposite effect, however, the macular flow fracti
 Indeed, in our model, for a given OPP, flow in the CRA is theoretically bounded by the radius and length of the CRA according to Equation~(\ref{eq:poiseuille}).
 The same effect explains the non-symmetrical changes in total retinal blood flow as $\mathcal R$ is decreased (see Figure~S2). %\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}). 
 
-\subsection{Associations between structure and function}\label{sec:disc-results}
+\subsection{Associations between vascular structure and function}\label{sec:disc-results}
 
 Analysis of the \SI{200}{} virtual vasculatures revealed associations between several of the morphological metrics and total retinal blood flow.
 In particular, larger VAD, VDI, and FD in the SVP were strongly associated with larger retinal blood flow.
@@ -874,9 +875,9 @@ Interestingly, VAD in the ICP showed a moderate positive correlation with retina
 However, VAD in the DCP and in the combined ICP-DCP complex, as well as FD in the ICP-DCP complex, did not show any significant correlations.
 None of the tested metrics were significantly associated with the fraction of flow transiting through the macula.
 Uncertainty quantification showed that those results were independent of the haemodynamics model's parameters.
-As shown in Figure~S3, varying OPP does not have any effects on the Spearman correlation coefficients.
-Increasing the value of $\mathcal R$ shifts the value of the coefficients for macular flow fraction towards the coefficients for total retinal blood flow.
-When $\mathcal R$ becomes large, macular flow becomes close to retinal flow, as seen in Figure~S2, therefore increasing the impact of macular morphology on the overall system. 
+As shown in Figures~S3 and~S4, varying OPP, $\mathcal R$ and $\alpha$ does not have any effects on the Spearman correlation coefficients.
+% Increasing the value of $\mathcal R$ shifts the value of the coefficients for macular flow fraction towards the coefficients for total retinal blood flow.
+% When $\mathcal R$ becomes large, macular flow becomes close to retinal flow, as seen in Figure~S2, therefore increasing the impact of macular morphology on the overall system. 
 
 In Section~\ref{sec:StructureAndFunction}, the correlation coefficients between morphological metrics and haemodynamics were obtained from one-to-one comparisons and therefore do not capture possible interplay between morphological metrics.
 Additional analysis is required to better understand which metrics or combination of metrics are strong predictors of blood flow.
@@ -896,7 +897,7 @@ Nonetheless, the first and total order indices suggest that the parameter space 
 Interestingly, $\theta_{min}$ appeared as the most influential parameter.
 In particular, it was the sole parameter influencing VSD.
 This results confirms the hypothesis by \cite{Yao_2020} that branch geometry is correlated with vessel perimeter index, which would be twice VSD when computed on artificial vessels.
-The associations between structure and haemodynamics should be investigating further, perhaps with spatial metrics which can be compared with OCTA measurements~\cite{Yao_2020}.
+The associations between vascular structure and haemodynamics should be investigating further, perhaps with spatial metrics which can be compared with OCTA measurements~\cite{Yao_2020}.
 
 \subsection{Limitations}\label{sec:disc-limitations}
 
