@@ -123,7 +123,7 @@ In particular, virtual populations and \textit{in silico} clinical trials are a 
 Optical coherence tomography angiography (OCTA) is a non-invasive, new imaging modality that offers three dimensional, high resolution angiograms of the macula, which is the central-most area of the retina.
 Several microvascular metrics, such as vessel density and fractal dimension, have been suggested to quantify the quality of the microvasculature on OCTAs~\cite{Chu2016}.
 Using those metrics, several microvascular changes have been not only linked with ageing and diseased retinae~\cite{ElBouri_2021,Ma2021,Trinh_2019,Told2023,Xue_2021} but also with cerebrovascular changes and cardiovascular diseases~\cite{Pleouras_2021,Graff_2021,LopezCuenca_2022}.
-For the brain and the heart, virtual populations have been developed, but similar work is yet to be done for the retinal vasculature or for the linked cerebral-retinal vasculature~\cite{Hernandez2023}.
+For the brain and heart vasculatures, virtual populations have been developed, but similar work is yet to be done for the retinal vasculature or for the linked cerebral-retinal vasculature~\cite{Hernandez2023}.
 
 Alterations to the retinal and choroidal vasculature are expected to negatively affect the perfusion of the retina.
 Ischaemia and hypoxia are likely involved in the pathogenesis of several retinal diseases, particularly in neovascular diseases such as neovascular age-related
@@ -321,7 +321,27 @@ by~\cite{Talou2021}. With the CCO, trees are grown to minimise the tree’s
 total volume while, for each addition of vessel segments,
 keeping a constant pressure drop from
 inlet to outlet and satisfying several geometrical constraints.
-These constraints affect the radius of branches~\cite{Murray_1926}, the symmetry of branches and the aspect ratio of new segments~\cite{Talou2021}.
+The haemodynamic model used by the CCO is similar to Equations~(\ref{eq:poiseuille}-~(\ref{eq:viscosity})) but with a different viscosity model~\cite{Talou2021}.
+Viscosity is computed with a fixed-point scheme with starting point $\eta$.
+The geometrical constraints affect the radius of branches~\cite{Murray_1926}, the symmetry of branches and, the branching angle and the aspect ratio of new segments~\cite{Talou2021}.
+Specifically, denoting $r_p,\ r_1$ and $r_2$ the radius of the parent vessel and the two daugther branches and by $\theta$ the angle between the two branches, the following constraints apply:
+\begin{equation}
+  \label{eq:CCOradiusconstraints}
+  % \left\{
+  %   \begin{array}{c}
+  r_p^\gamma = r_1^\gamma + r_2^\gamma, \quad
+  \frac{\min(r_1,r_2)}{\max(r_1,r_2} > \delta\quad\text{and}\quad
+  \theta>\theta_{min}.
+  %   \end{array}
+  % \right.
+\end{equation}
+Further constraints ensure that the generated tree provides a relatively homogeneous coverage of the domain.
+Namely, for a tree grown in a domain $\Omega\subset\mathbb{R}^2$ with $N$ terminal vessels the location for a new terminal vessel is rejected if is less than
+\begin{equation}
+  \label{eq:nu}
+  l_{min}=\left(\frac{\nu}{\pi(N+1)}\int_\Omega dA\right)^{1/2}.
+\end{equation}
+If $20$ consecutive points fail to satisfy Equation~(\ref{eq:nu}), $l_{min}$ is reduced by a factor $l_{fr}$.
 
 In addition to the original CCO’s constraints, tree growth is
 geometrically constrained to prevent vessels from crossing the line
@@ -334,6 +354,8 @@ zone (FAZ) free of vessels.
 Indeed, the fovea has higher concentration
 of cells, and therefore more metabolic needs, compared to the rest of
 the retina~\cite{Zouache2022}.
+For a candidate terminal vessel located at $x_{new}$, the CCO finds the most suitable vessel within a radius $f_n\left(\int_\Omega dA\right)^{1/2}$ of $x_{new}$ that satisfy the above geometrical constraints.
+
 The CCO is applied in three stages, within three circular regions: in
 a disk of radius $r_{retina}$ (i.e., the entire computational domain), in an annulus with radii $r_{parafovea}$ and $r_{perifovea}$
 and finally in a disk of radius $r_{parafovea}$
@@ -538,19 +560,19 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
     {$r_{parafovea}$}                  & {Radius of the parafoveal region (\SI{}{\mm}).} & {$1.5$}
     \\ \midrule
     {$(\sigma,\mu, r_0)$}              & {Parameters of the log-normal distribution giving the distance to the fovea as $r = r_0 + e^{\mu+\sigma Z}$ with $Z\sim\mathcal N(0,1)$.} & {$(4, -0.5, 0.02)$ for all stages.}                                                                                                  \\ \midrule
-    {$\delta$}                         & {Symmetry ratio at bifurcations.}                                                                                                        & {$0.8, 0, 0$}
+    {$\delta$}                         & {Minimal radius symmetry ratio at bifurcations in Equation~(\ref{eq:CCOradiusconstraints}).}                                                                                                        & {$0.8, 0, 0$}
     \\ \midrule
-    {$\theta_{min}$}                   & {Minimum bifurcation angle, in degree.} & {$60, 60, 60$}\\
+    {$\theta_{min}$}                   & {Minimum bifurcation angle in Equation~(\ref{eq:CCOradiusconstraints}), in degree.} & {$60, 60, 60$}\\
     \midrule
-    {$\gamma$} & {Murray's law coefficient~\cite{Murray_1926}} & {$3, 2.85, 2.85$}~\cite{Murray_1926,Takahashi2009}\\
+    {$\gamma$} & {Murray's law coefficient in Equation~(\ref{eq:CCOradiusconstraints})~\cite{Murray_1926}} & {$3, 2.85, 2.85$}~\cite{Murray_1926,Takahashi2009}\\
     \midrule
-    {$\eta$} & {Efficient blood viscosity (cP) used by CCO algorithm~\cite{Talou2021}} & {$0.36$}~\cite{Murray_1926,Takahashi2009}\\
+    {$\eta$} & {Starting point (in cP) of the fixed-point iteration for the effective viscosity model used by the CCO algorithm~\cite{Talou2021}}. & {$0.36$}~\cite{Murray_1926,Takahashi2009}\\
     \midrule
-    {$\l_{lim}f_r$} & Correction step factor of the CCO algorithm, see~\cite{Talou2021} for details. & {$0.8$, $0.5$, $0.5$}\\
+    {$\l_{fr}$} & $l_{min}$ correction step factor (Equation~(\ref{eq:nu}). & {$0.8$, $0.5$, $0.5$}\\
     \midrule
-    {$\nu$} & Perfusion area factor of the CCO algorithm, see~\cite{Talou2021} for details. & {$1$, $1$, $1$}\\
+    {$\nu$} & Perfusion area factor of the CCO algorithm, Equation~(\ref{eq:nu}). & {$1$, $1$, $1$}\\
     \midrule
-    Neighborhood factor & Parameter of the CCO algortihm, see~\cite{Talou2021} for details. & {$1$, $1$, $1$}\\
+    $f_n$ & Neighborhood factor for candidate bifurcation point. & {$1$, $1$, $1$}\\
     \toprule
     \textbf{Microvasculature hyperparameters} & \textbf{Description}                                                                                                                            & \begin{tabular}{ll}\textbf{Value}\\(SVP, ICP, DCP)\end{tabular}
     \\ \midrule
@@ -738,7 +760,7 @@ The parameters were sampled uniformly within the ranges presented in Table~\ref{
 
 For most metrics, all parameters share a similar total order and small first order.
 Notably, $\theta_{min}$ stands out as the most influential overall, explaining around \SI{50}{\percent} of the variance in FD and most of the variance in VSD ($S_i=S_{T_i}\approx 1$) by itself.
-Other parameters of interest include $N_{seeds}$ for the SVP, $N_{terms}$ for stage 2 and, to a lesser extent, $l_{lim}fr$.
+Other parameters of interest include $N_{seeds}$ for the SVP, $N_{terms}$ for stage 2 and, to a lesser extent, $l_{fr}$.
 These results indicate that those four parameters are enough to produce a virtual population with inter-population variability, at least in the SVP.
 
 
@@ -759,7 +781,7 @@ These results indicate that those four parameters are enough to produce a virtua
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{*{10}{l}}
       \toprule
-      \begin{tabular}[c]{@{}l@{}}$N_{terms}$\\ stage 2\end{tabular} & \begin{tabular}[c]{@{}l@{}}$N_{terms}$ \\ stage 3\end{tabular} & $l_{lim}f_r$ & $\delta$ & $\eta$ & $\gamma$ & $\nu$ & $\theta_{min}$ & \begin{tabular}[c]{@{}l@{}}Neighborhood\\ factor\end{tabular} & \begin{tabular}[c]{@{}l@{}}$N_{seeds}$ \\ SVP\end{tabular} \\ \midrule
+      \begin{tabular}[c]{@{}l@{}}$N_{terms}$\\ stage 2\end{tabular} & \begin{tabular}[c]{@{}l@{}}$N_{terms}$ \\ stage 3\end{tabular} & $l_{fr}$ & $\delta$ & $\eta$ & $\gamma$ & $\nu$ & $\theta_{min}$ & $f_n$ & \begin{tabular}[c]{@{}l@{}}$N_{seeds}$ \\ SVP\end{tabular} \\ \midrule
       \Range{300}{500}{} & \Range{200}{400}{} & \Range{0.1}{0.9}{} & \Range{0.1}{0.9}{} & \Range{0.2}{0.5}{} & \Range{2}{3}{} & \Range{0.1}{0.9}{} & \Range{0}{72}{} & \Range{0}{5}{} & \Range{300}{700}{} \\
       \bottomrule
     \end{tabular}
