@@ -133,7 +133,7 @@ vessels through angiogenesis~\cite{Medina_2016}.
 While angiogenesis and VEGF are essential to the development of the vascular and in maintaining physiological conditions, the upregulation of VEGF is involved with the development of pathological neovasculature~\cite{Fruttiger_2007,Nishinaka_2018}. 
 Hypoxia is a known upregulating factor of VEGF and targeting ischaemia-induced angiogenic pathways might improve treatment outcomes~\cite{UsuiOuchi2020}.
 
-Retinal oxymeters provide a way to analyse oxygen saturation in some of the larger blood vessels of the superficial retina.
+Retinal oximeters provide a way to analyse oxygen saturation in some of the larger blood vessels of the superficial retina.
 However, experimental measurements in the tissue and in the capillaries of the retina remain difficult or invasive, therefore there is still uncertainty regarding the role of hypoxia in the pathogenesis of neovascular diseases.
 Furthermore, it also remains unclear
 how changes in microvascular metrics computed on OCTAs relate to the
@@ -178,7 +178,7 @@ The modelling framework presented here can quantify these impairments in large v
 The model captures the complexity of the macular vasculature and is able to link imaging biomarkers with physiological parameters.
 Our study sought to: 1) develop a method for generating coherent vascular networks in the retina and macula, adaptable to virtual population generation, described in Section~\ref{sec:structModel};
 2) propose a mathematical model of blood flow in the virtual vasculatures, detailed in Section~\ref{sec:haemodynamicModel};
-3) quantify associations between macular vascular morphology and haemodynamics parameters in a healthy retinal population (Section~\ref{sec:Measurements});
+3) quantify associations between macular vascular morphology and haemodynamics parameters in a healthy retinal population (Section~\ref{sec:Measurements}).
 In the macula, all three capillary layers are modelled.
 In Section~\ref{sec:validation} we compare the microvascular structure of the model with OCTA measurements and validate the blood flow model against two independent experimental studies.
 Additionally, global sensitivity analysis on the method's hyperparameters, detailed in Section~\ref{sec:method-gsa}, lays the foundation for generating tailored retinal populations based on the distribution of morphological metrics and the uncertainty quantification results presented in Section~\ref{sec:methods-UQ} show the robustness of our model's predictions. 
@@ -202,6 +202,7 @@ Section~\ref{sec:discussion} contains a discussion of the results, while Section
 \section{Methods}\label{sec:methods}
 
 In this section we describe the proposed models.
+These parameters are the radius of the central retinal artery (CRA), the blood velocity in the CRA and the .
 Section~\ref{sec:structModel} describes the model that generates the
 retinal vasculature, from the macro to micro scale.
 Section~\ref{sec:haemodynamicModel} describes the proposed haemodynamic
@@ -330,7 +331,7 @@ Specifically, denoting $r_p,\ r_1$ and $r_2$ the radius of the parent vessel and
   % \left\{
   %   \begin{array}{c}
   r_p^\gamma = r_1^\gamma + r_2^\gamma, \quad
-  \frac{\min(r_1,r_2)}{\max(r_1,r_2} > \delta\quad\text{and}\quad
+  \frac{\min(r_1,r_2)}{\max(r_1,r_2)} > \delta\quad\text{and}\quad
   \theta>\theta_{min}.
   %   \end{array}
   % \right.
@@ -363,8 +364,8 @@ and finally in a disk of radius $r_{parafovea}$
 
 To simulate growth biased towards the fovea while keeping the FAZ free
 of vessels, the coordinates of a segment endpoint are given by
-$(x,y)=(r\cos\theta, r\sin\theta)$, where $\theta$ is the opening angle and follows a uniform
-distribution over the interval $[0,2\pi)$ and $r$ is the distance to the center of the macula and follows a log-normal distribution (see Table~\ref{tab:parameters}). Arterio-venous
+$x=(r\cos\theta, r\sin\theta)$, where $\theta$ is the opening angle and follows a uniform
+distribution over the interval $[0,2\pi)$ and $r$ is the distance to the center of the macula, as shown on Figure~\ref{fig:1}A, and follows a log-normal distribution (see Table~\ref{tab:parameters}). Arterio-venous
 networks of the superficial vascular plexus are generated in three
 steps: 1) the CCO is applied to create a backbone of larger arterioles
 and venules from the arterial and venous arcades. The arterial and
@@ -519,7 +520,7 @@ All terminal arteries outflow into the compartment through artificial vessels wi
 All terminal veins drain the vascular compartment through artificial vessels with the same resistance. 
 % The macula has twice the density of cells compared to the rest of the retina~\cite{Zouache2022}.
 % Assuming that regions of higher cell density require similarly higher blood flow, it can be estimated that the macula requires \SIrange{15}{30}{\percent} of the total retinal blood flow.
-The baseline value of parameter $\mathcal R$ was selected such that the haemodynamic parameters' distribution across the vasculature is similar to experimental data~\cite{DoblhoffDier2014,Riva1985} for the baseline simulations.
+At baseline, $\mathcal R=\SI[per-mode=symbol]{5e5}{\mmHg\second\per\mL}$ was selected such that the haemodynamic parameters' distribution across the vasculature is similar to experimental data~\cite{DoblhoffDier2014,Riva1985} for the baseline simulations.
 
 \begin{table}
   \def\tabularxcolumn#1{m{#1}}
@@ -541,9 +542,10 @@ The baseline value of parameter $\mathcal R$ was selected such that the haemodyn
     {$MAP$}                            & {Mean arterial pressure (\SI{}{\mmHg}).}                                                                                                         & {$84\pm6$~\cite{Dorner2009}}
     \\ \midrule
     {$IOP$}                            & {Intraocular pressure (\SI{}{\mmHg}).}                                                                                                           & {$11.1\pm2.1$~\cite{Samsudin2016}}
-    \\ \midrule
-    {$\mathcal R$}                     & {Resistance of vessels linked with the peripheral vascular compartment (\SI[per-mode=symbol]{}{\mmHg\second\per\mL}).}   & {$5\times10^5$}
     \\
+    % \midrule
+    % {$\mathcal R$}                     & {Resistance of vessels linked with the peripheral vascular compartment (\SI[per-mode=symbol]{}{\mmHg\second\per\mL}).}   & {$5\times10^5$}
+    % \\
     \bottomrule
 
     \textbf{Macrovasculature hyperparameters} & \textbf{Description}                                                                                                                            & \begin{tabular}{ll} \textbf{Value}\\(stage 1, 2, 3)\end{tabular}\\
@@ -673,6 +675,7 @@ To quantify the uncertainty brought on the correlation coefficients, the same ex
 
 A virtual population of 200 healthy vasculatures was generated.
 The population parameters were sampled from normal distributions as specified in the ``population parameters'' section of Table~\ref{tab:parameters}. %their distribution in the generated population is shown in Figure~\ref{fig:VP-params-distribution}.
+All other parameters were kept at their baseline values, given in Table~\ref{tab:parameters}.
 Haemodynamics simulations were performed for each virtual vasculature using the virtual individual's OPP.
 The mean $\pm$ standard deviation in OPP was $\SI{45.2 \pm 4.2}{\mmHg}$ (range: \SIrange{32.83}{56.0}{\mmHg}).
 The parameter $v_{CRA}$ was not used in the haemodynamics simulations.
@@ -954,7 +957,7 @@ In future work, the validated virtual populations presented here will be used to
 Disease populations such as diabetic retinopathy or age-related macular degeneration, where OCTA indices have been reported to be affected by the disease, can also be generated by using population-specific distributions for the population parameters listed in Table~\ref{tab:parameters} and/or by varying hyperparameters, such as $\theta_{min}$, which according to the sensitivity analysis results presented in Section~\ref{sec:method-gsa} can affect microvascular morphology.
 Additional mechanisms which may have importance in disease, such as autoregulation\cite{Guidoboni2014,Arciero2013} or plasma skimming\cite{Ganesan_2010} can easily be added to the current model.
 For instance, autoregulation may be negatively affected by diabetes\cite{Stitt_2016} while simultaneously asymmetric branching cause heterogeneous distribution of oxygen due to plasma skimming.
-This way, our model can be used to understand the relationship between microvasculature and pathological angiogenesis, a symptom of several blinding diseases\cite{Medina_2016}, and provides a framework to build upon in order to achieve patient-specific treatment simulations.
+This way, our model can be used to understand the relationship between microvasculature and pathological angiogenesis, a symptom of several blinding diseases\cite{Medina_2016}, and provides a framework to build upon to achieve patient-specific treatment simulations.
 
 \section{Conclusion}\label{sec:conclusion}
 
