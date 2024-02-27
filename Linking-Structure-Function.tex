@@ -91,7 +91,7 @@
 \begin{abstract}
   \textbf{Purpose:}
   This study explores the relationship between microvascular parameters as delineated by optical coherence tomography angiography (OCTA) and retinal perfusion.
-  We introduce a versatile framework to examine the interplay between the retinal vasculature structure and function, generating virtual vasculatures from central retinal vessels to macular capillaries.
+  We introduce a versatile framework to examine the interplay between the retinal vascular structure and function, generating virtual vasculatures from central retinal vessels to macular capillaries.
   Alongside this, we develop a haemodynamics model which tests the associations between vascular morphology and retinal perfusion.
 
   \textbf{Methods:} The generation of the vasculature is based on the distribution of four clinical parameters pertaining to the dimension and blood pressure of the central retinal vessels, constructive constrained optimisation and Voronoi diagrams.
@@ -707,7 +707,7 @@ The morphology of the macula, within a disk of diameter \SI{3}{\mm} centred at t
 
 Figure~\ref{fig:Horton_Strahler} shows vessel diameters for each stream order in the macula.
 The distribution is similar to histological data~\cite{An2020}.
-Mean diameters were smaller in the model, but experimental data lay within the ranges of diameters in the model for each order.
+Mean diameters were smaller in the model, but lay within the reported ranges for each order.
 The ratio of average arteriole diameter to average venule diameter increased from $\SI{0.92\pm 0.09}{}$ in order 5 vessels to $\SI{0.95\pm0.05}{}$ in order 1 vessels.
 For all orders combined, the ratio was $0.937\pm0.031$, which is consistent with experimental measurements of $\SI{0.9\pm0.1}{}$~\cite{Goldenberg2013}.  
 
@@ -758,12 +758,12 @@ The correlations with the macular flow fraction were all below \SI{0.25}, indica
 
 \subsubsection{Minimum branching angle dominates structural variability}\label{sec:gsa}
 
-Figure~\ref{fig:gsa}A shows the Sobol indices for \SI{10}{} hyperparameters, computed with the python library SALib\cite{Iwanaga_2022,Herman_2017} using $\SI{11000}{}$ simulations.
+Figure~\ref{fig:gsa}A shows the Sobol indices for \SI{10}{} hyperparameters, computed with the Python library SALib\cite{Iwanaga_2022,Herman_2017} using $\SI{11000}{}$ simulations.
 The parameters were sampled uniformly within the ranges presented in Table~\ref{tab:MonteCarloSamplingRanges} using the algorithm by~\cite{Saltelli2002}.
 
 For most metrics, all parameters share a similar total order and small first order.
 Notably, $\theta_{min}$ stands out as the most influential overall, explaining around \SI{50}{\percent} of the variance in FD and most of the variance in VSD ($S_i=S_{T_i}\approx 1$) by itself.
-Other parameters of interest include $N_{seeds}$ for the SVP, $N_{terms}$ for stage 2 and, to a lesser extent, $l_{fr}$.
+Other parameters of interest include $N_{seeds}$ for the SVP, $N_{terms}$ for the second stage of the CCO and, to a lesser extent, $l_{fr}$.
 These results indicate that those four parameters are enough to produce a virtual population with inter-population variability, at least in the SVP.
 
 
@@ -843,16 +843,16 @@ In Section~\ref{sec:validation}, we validated the models against experimental da
 % Furthermore, capillaries in the macula are close in diameter to the resolution of standard OCTA~\cite{Chu2016}, which might lead to overestimates of vessel area.
 % This could also explain the differences, some large, in VCI, VDI, VSD and IVD if we calibrated the hyperparameters based on a false value of VAD, leading to an unnaturally dense vasculature.
 The morphology of the SVP was within the ranges of values found in the literature for healthy retinas, as quantified by OCTA~\cite{Mehta_2019,Chu2016,Liu_2021,Ma2021,Agarwal_2019}.
-In the ICP and DCP, VAD were very close to values reported in an histology study~\cite{Chan2012} but IVD was larger in both plexuses compared to OCTA data~\cite{Liu_2021}.
+In the ICP and DCP, VAD was very close to values reported in an histology study~\cite{Chan2012} but IVD was larger in both plexuses compared to OCTA data~\cite{Liu_2021}.
 This was more marked in the ICP compared to the DCP.
 The morphology of the microcirculation delineated on OCTA is sensitive to various factors, including scan post-processing~\cite{Mehta_2020,Mehta_2019} and segmentation of the different plexuses, which makes direct comparison complicated.
 
-The morphology of the ICP and DCP vasculature was very homogeneous across the generated cohort, as indicated by the small standard deviations.
-As demonstrated by the sensitivity analysis, this may be resolved by varying $N_{seeds}$, though reasonable bounds need to be defined.
+The morphology of the ICP and DCP vasculature was very homogeneous across the generated cohort, as indicated by the small standard deviations in Figure~\ref{fig:OCTAValidation}.
+As demonstrated in the SVC by the sensitivity analysis, this may be resolved by varying $N_{seeds}$, though reasonable bounds need to be defined.
 
-Figure~\ref{fig:Horton_Strahler} showed that the model's distribution of diameters across Horton-Strahler order was similar to experimental data~\cite{An2020}.
+Figure~\ref{fig:Horton_Strahler} showed that the model's distribution of diameters across Horton-Strahler order was similar to an histological study~\cite{An2020}.
 However, capillaries were smaller in our model compared to the data.
-In their study,~\cite{An2020} capillaries were any vessel with diameter $<\SI{8}{\micro\metre}$, whereas in our model capillaries were assigned a diameter of \SI{5}{\micro\metre} or \SI{10}{\micro\metre} if they are directly connected to an arteriole or venule.
+In their study~\cite{An2020}, capillaries were any vessel with diameter $<\SI{8}{\micro\metre}$, whereas in our model capillaries were assigned a diameter of \SI{5}{\micro\metre} or \SI{10}{\micro\metre} if they are directly connected to an arteriole or venule.
 This strategy may be too simplistic to represent the spread of diameters in the vascular bed.
 Others have suggested to update the diameter of vessels based on blood pressure from a first haemodynamics simulation~\cite{Linninger2013}.
 More in depth analysis of the capillary beds is necessary in order to develop an appropriate strategy.
@@ -887,7 +887,7 @@ Assuming that regions of higher cell density require similarly higher blood flow
 In Section~\ref{sec:UQ}, we quantified the effects of the two parameters of the haemodynamics model on total retinal blood flow and macular flow fraction.
 Increasing $\mathcal R$ is similar to gradually closing the connections to/from the vascular compartment.
 Therefore, flow is shunted towards the macula and macular flow fraction increases.
-Decreasing $\mathcal R$ has an opposite effect, however, the macular flow fraction will eventually reach a plateau when the CRA reaches its maximum capacity in term of blood flow: regardless of the resistance of paths outside the macula, blood will flow through the macula and total retinal blood flow is bounded by physical constraints.
+Decreasing $\mathcal R$ has an opposite effect. However, the macular flow fraction will eventually reach a plateau when the CRA reaches its maximum capacity in term of blood flow: regardless of the resistance of paths outside the macula, blood will flow through the macula and total retinal blood flow is bounded by physical constraints.
 Indeed, in our model, for a given OPP, flow in the CRA is theoretically bounded by the radius and length of the CRA according to Equation~(\ref{eq:poiseuille}).
 The same effect explains the non-symmetrical changes in total retinal blood flow as $\mathcal R$ is decreased (see Figure~S2). %\ref{fig:sup-UQ-TRBF-MFR-vs-R-OPP}). 
 
@@ -921,7 +921,7 @@ Nonetheless, the first and total order indices suggest that the parameter space 
 
 Interestingly, $\theta_{min}$ appeared as the most influential parameter.
 In particular, it was the sole parameter influencing VSD.
-This results confirms the hypothesis by \cite{Yao_2020} that branch geometry is correlated with vessel perimeter index, which would be twice VSD when computed on artificial vessels.
+This result supports the hypothesis by~\cite{Yao_2020} that branch geometry is correlated with vessel perimeter index, which would be twice VSD when computed on artificial vessels.
 The associations between vascular structure and haemodynamics should be investigating further, perhaps with spatial metrics which can be compared with OCTA measurements~\cite{Yao_2020}.
 
 \subsection{Limitations}\label{sec:disc-limitations}
@@ -929,12 +929,12 @@ The associations between vascular structure and haemodynamics should be investig
 Our method has several limitations that should be acknowledged.
 We did not model the peripapillary capillary plexus, ignored the curvature of the retina, and assumed a unique inter-plexi connection pattern.
 We also assumed that each plexi lay in a two-dimensional plane.
-Additionally, as described in Section~\ref{sec:microvasculature}, direct connections between arterioles/venules and capillaries in the SVP were added with a likelihood $\alpha$ which was arbitrarily set to \SI{40}{\percent}.
+Additionally, as described in Section~\ref{sec:microvasculature}, direct connections between arterioles/venules and capillaries in the SVP were added with a likelihood $\alpha$, which ignores physiological behaviours.
 Similarly, the likelihood of an arteriole or venule to bifurcate to the deeper layers was also arbitrarily set to \SI{30}{\percent}.
-The effects of these two values has yet to be assessed.
+The validity of these two assumptions has yet to be tested.
 
 The effects of uncertainty in measurements (i.e., MAP, IOP, $r_{CRA}$ and $v_{CRA}$) on the generated vasculature remain to be quantified.
-The number of hyperparameters is large and global sensitivity analysis show their effects on vascular metrics to be non-local.
+The number of hyperparameters is large and global sensitivity analysis shows their effects on vascular metrics to be non-local.
 Therefore, directly adapting the method to generate different virtual populations may prove challenging.
 Indeed, as stated by~\cite{Allen_2016}, efficient generation of virtual populations requires knowledge of plausible ranges for the model parameters and optimising over the set of model parameters.
 Reducing the number of parameters to the most influential ones appear necessary and the sensitivity analysis presented in this study is a first step towards this goal.
@@ -962,8 +962,8 @@ This way, our model can be used to understand the relationship between microvasc
 \section{Conclusion}\label{sec:conclusion}
 
 While macular microvascular parameters serve as potent disease biomarkers, their relationship with retinal perfusion remains ambiguous.
-Our method establishes a versatile framework for exploring the interplay between retinal vasculature structure and function.
-Designed to generate virtual populations from just four parameters and various quantitative OCTA-based measurements, the method can easily be adapted to different populations.
+Our method establishes a versatile framework for exploring the interplay between retinal vascular structure and function.
+Designed to generate virtual populations from just four parameters and various quantitative OCTA-based measurements, the method can be adapted to different populations.
 
 In our study, the model generated a population of healthy eyes, revealing robust connections between macular morphology and total retinal blood flow, independent of model parameters.
 The initially large hyperparameter space is effectively reduced to four hyperparameters for precise population generation.
