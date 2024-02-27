@@ -87,13 +87,14 @@
 
 \maketitle
 
+\newpage
 \begin{abstract}
   \textbf{Purpose:}
   This study explores the relationship between microvascular parameters as delineated by optical coherence tomography angiography (OCTA) and retinal perfusion.
   We introduce a versatile framework to examine the interplay between the retinal vasculature structure and function, generating virtual vasculatures from central retinal vessels to macular capillaries.
   Alongside this, we develop a haemodynamics model which tests the associations between vascular morphology and retinal perfusion.
 
-  \textbf{Methods:} The generation of the vasculature is based on the distribution of four clinical parameters pertaining to the dimension and blood pressure of the central retinal vessels, constructive constrained optimisation and Voronoi diagram.
+  \textbf{Methods:} The generation of the vasculature is based on the distribution of four clinical parameters pertaining to the dimension and blood pressure of the central retinal vessels, constructive constrained optimisation and Voronoi diagrams.
   Arterial and venous trees are generated in the temporal retina and connected through three layers of capillaries at different depths in the macula.
   The correlations between total retinal blood flow and macular flow fraction and vascular morphology are derived as Spearman rank coefficients and uncertainty from input parameters is quantified.
   
@@ -367,8 +368,8 @@ $p_{pre-capillary}$ is taken from pressure in pre- and post-capillary vessels in
 the theoretical model by~\cite{Takahashi2009}. % and reported in
 % Table~\ref{tab:parameters}.
 
-\paragraph{Microvasculature}\label{sec:microvasculature} At the macro
-scale, arterioles and venules generally follow a bifurcating
+\paragraph{Microvasculature}\label{sec:microvasculature}
+At the macro scale, arterioles and venules generally follow a bifurcating
 structure, with parent vessels giving rise to two daughter
 branches. The CCO algorithm follows this logic to create vascular
 trees.  At the micro scale, however, capillaries tend to form complex
@@ -393,6 +394,7 @@ Since the ICP and DCP are modelled in the macula only, inter-plexi connections a
 Specifically, arterioles and venules within the macular area of the SVP bifurcate to the ICP and those branches immediately bifurcate to the DCP.
 This corresponds to the most prevalent patterns in the histology study~\cite{An2020}.
 From the SVP, \SI{30}{\percent} of the arterioles and venules were selected for bifurcation to the ICP and the bifurcation points were added in the middle of the selected vessels.
+An example of all three plexi in the macula is shown in Figure~\ref{fig:fig2}B.
 
 All capillary segments are initially given the same radius $r_{capillary}$ unless they are connected to an arteriole or venule, in which case their initial radius is twice that of other capillaries.
 Diameter transitions at bifurcations are smoothed using the method proposed by~\cite{Linninger2013}.
@@ -449,8 +451,8 @@ These gradients provide an ordering of the capillaries, from high to low value, 
 Blood is modelled as an incompressible, Newtonian fluid flowing in a
 network of connected tubes by the Hagen-Poiseuille equation.
 This modelling framework considers the
-vasculature as an arrangement of connected, straight tubes across which
-pressure drop $\Delta p$, vascular resistance $R$ and volumetric blood
+vasculature as an arrangement of connected, straight tubes, an example of which is shown in Figure~\ref{fig:fig2}A,
+across which pressure drop $\Delta p$, vascular resistance $R$ and volumetric blood
 flow $Q$ are related by:
 \begin{equation}
   \label{eq:poiseuille}
@@ -491,7 +493,7 @@ Outside the macula, however, the first stage of the CCO detailed in
 Section~\ref{sec:CCO} leaves terminal vessels with no further branches, both on the arterial and venous sides.
 This happens as a result of not generating the full extent of the peripheral vasculature.
 To close the vascular network, these terminal vessels need to somehow be linked to the CRA/CRV or haemodynamics in those vessels need to be explicitly given as boundary conditions of the model.
-In the absence of adequate data on haemodynamics for those vessels, we chose to instead link the terminal vessels through a compartment.
+In the absence of adequate data on haemodynamics for those vessels, we chose to instead link the terminal vessels through a compartment, as shown in Figure~\ref{fig:fig2}A.
 This avoids the need for boundary conditions.
 All terminal arteries outflow into the compartment through artificial vessels with a resistance $\mathcal R$.
 All terminal veins drain the vascular compartment through artificial vessels with the same resistance. 
@@ -677,7 +679,7 @@ The morphology of the macula, within a disk of diameter \SI{3}{\mm} centred at t
 \begin{figure}[ht!]
   \centering
   \includegraphics[width=.95\textwidth]{Horton_Strahler_Diameter_Distribution}
-  \caption{\label{fig:Horton_Strahler}Box-and-whisker plot of the diameter of virtual vessels in the macula for each Horton-Strahler order. On average, close to \SI{5000} vessel segments were analysed for each vasculature. Whiskers extend to the minimum and maximum within \SI{1.5}{} times the inter-quartile range.}  
+  \caption{\label{fig:Horton_Strahler}Box-and-whisker plot of the diameter of virtual vessels in the macula for each Horton-Strahler order. On average, close to \SI{5000} vessel segments were analysed for each vasculature. Whiskers extend to the minimum and maximum within \SI{1.5}{} times the inter-quartile range. For comparison, lines show the mean (solid line) and quartiles (dashed lines) from experimental data\cite{An2020}.}  
 \end{figure}
 
 Figure~\ref{fig:Horton_Strahler} shows vessel diameters for each stream order in the macula.
@@ -801,7 +803,7 @@ Parameter $\alpha$ was not correlated with either of the haemodynamics variable 
 
 A virtual cohort of 200 healthy patients was generated and analysed. 
 The generated vasculature showed good agreement, structurally, with experimental and clinical measurements.
-The haemodynamics model showed good qualitative agreement with two independent experimental studies.
+The haemodynamics model showed good qualitative and quantitative agreement with two independent experimental studies.
 The model predicted strong association between several microvascular parameters and total retinal blood flow.
 
 \subsection{Validation}\label{sec:disc-validation}
@@ -827,7 +829,7 @@ As demonstrated by the sensitivity analysis, this may be resolved by varying $N_
 
 Figure~\ref{fig:Horton_Strahler} showed that the model's distribution of diameters across Horton-Strahler order was similar to experimental data~\cite{An2020}.
 However, capillaries were smaller in our model compared to the data.
-In their study,~\cite{An2020} considered as capillaries any vessel with diameter $<\SI{8}{\micro\metre}$, whereas in our model capillaries were assigned a diameter of \SI{5}{\micro\metre} or \SI{10}{\micro\metre} if they are directly connected to an arteriole or venule.
+In their study,~\cite{An2020} capillaries were any vessel with diameter $<\SI{8}{\micro\metre}$, whereas in our model capillaries were assigned a diameter of \SI{5}{\micro\metre} or \SI{10}{\micro\metre} if they are directly connected to an arteriole or venule.
 This strategy may be too simplistic to represent the spread of diameters in the vascular bed.
 Others have suggested to update the diameter of vessels based on blood pressure from a first haemodynamics simulation~\cite{Linninger2013}.
 More in depth analysis of the capillary beds is necessary in order to develop an appropriate strategy.
@@ -844,7 +846,8 @@ In experimental studies, the same relation between flow and radius is assumed an
 Therefore, even a small measurement error in vessel diameter combined with error in measurement in velocity still results in large deviations from the true blood flow.
 Both measurements are challenging and prone to errors~\cite{Leitgeb_2014}.
 To test this hypothesis, we reduced by \SI{20}{\percent} the lumen diameter of arteries larger than \SI{100}{\mu\metre} in diameter and ran the haemdoynamics simulations for the entire population.
-The velocity and flow distribution for this experiment are shown in Figure~S1 and show a good agreement with the experimental data.
+The velocity and flow distribution for this experiment are shown in Figure~S1 and show an improved agreement with the experimental data.
+
 In addition, all parameters in our virtual populations were sampled from independent normal distributions which is likely an incorrect assumption as, e.g., vessel diameter is likely to be correlated with arterial pressure and IOP~\cite{Dziedziak_2022}.
 % This is exemplified by the three patients with the largest blood flows in our virtual cohort which were between two and three times larger than the average (see Figure~\ref{fig:sup-TRBF}).
 % These patients shared a similar CRA radius, around \SI{28}{\percent} larger than the cohort's average.
@@ -931,7 +934,7 @@ In future work, its influence on other haemodynamics measurements should be thor
 In future work, the validated virtual populations presented here will be used to model intra and extravascular oxygen transport.
 Disease populations such as diabetic retinopathy or age-related macular degeneration, where OCTA indices have been reported to be affected by the disease, can also be generated by using population-specific distributions for the population parameters listed in Table~\ref{tab:parameters} and/or by varying hyperparameters, such as $\theta_{min}$, which according to the sensitivity analysis results presented in Section~\ref{sec:method-gsa} can affect microvascular morphology.
 Additional mechanisms which may have importance in disease, such as autoregulation\cite{Guidoboni2014,Arciero2013} or plasma skimming\cite{Ganesan_2010} can easily be added to the current model.
-For instance, autoregulation may be negatively affected by diabetes\cite{Stitt_2016} while simultaneously asymmetric branching cause heterogeneous distribution of oxygen due to plasma skimming.
+For instance, autoregulation may be negatively affected by diabetes\cite{Stitt_2016} while simultaneously asymmetric branching causes heterogeneous distribution of oxygen due to plasma skimming.
 This way, our model can be used to understand the relationship between microvasculature and pathological angiogenesis, a symptom of several blinding diseases\cite{Medina_2016}, and provides a framework to build upon in order to achieve patient-specific treatment simulations.
 
 \section{Conclusion}\label{sec:conclusion}
