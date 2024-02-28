@@ -65,11 +65,6 @@
 \bibliographystyle{iovs}
 
 \title{Linking Vascular Structure and Function: Image-Based Virtual Populations of the Retina}
-% \date{\today}
-% \author{R\'emi J. Hernandez\\ Department of Cardiovascular and Metabolic Medicine, University of Liverpool
-%   \and Yalin Zheng\\ Department of Eye and Vision Science, University of Liverpool
-%   \and Savita Madhusudhan\\ Liverpool Ophthalmic Reading Centre, St Paul's Eye Unit, Royal Liverpool University Hospitals NHS Trust
-%   \and Wahbi K. El-Bouri\\ Department of Cardiovascular and Metabolic Medicine, University of Liverpool}
 
 \author[1,2]{R\'{e}mi J. Hernandez\footnote{E-mail address: remi.hernandez@liverpool.ac.uk (R\'{e}mi Hernandez)}}
 \author[3,4]{Savita Madhusudhan}
@@ -82,6 +77,9 @@
 \affil[4]{Department of Eye and Vision Sciences, Institute of Life Course and Medical Sciences, University of Liverpool, UK}
 
 \providecommand{\keywords}[1]{\textbf{\textit{Keywords---}} #1}
+
+\date{Word count: 6144}
+
 
 \begin{document}
 
@@ -355,7 +353,7 @@ zone (FAZ) free of vessels.
 Indeed, the fovea has higher concentration
 of cells, and therefore more metabolic needs, compared to the rest of
 the retina~\cite{Zouache2022}.
-For a candidate terminal vessel located at $x_{new}$, the CCO finds the most suitable vessel within a radius $f_n\left(\int_\Omega dA\right)^{1/2}$ of $x_{new}$ that satisfy the above geometrical constraints.
+For a candidate terminal vessel located at $x_{new}$, the CCO finds the most suitable vessel within a radius $f_n\times\left(\int_\Omega dA\right)^{1/2}$ of $x_{new}$ that satisfy the above geometrical constraints.
 
 The CCO is applied in three stages, within three circular regions: in
 a disk of radius $r_{retina}$ (i.e., the entire computational domain), in an annulus with radii $r_{parafovea}$ and $r_{perifovea}$
@@ -520,7 +518,7 @@ All terminal arteries outflow into the compartment through artificial vessels wi
 All terminal veins drain the vascular compartment through artificial vessels with the same resistance. 
 % The macula has twice the density of cells compared to the rest of the retina~\cite{Zouache2022}.
 % Assuming that regions of higher cell density require similarly higher blood flow, it can be estimated that the macula requires \SIrange{15}{30}{\percent} of the total retinal blood flow.
-For baseline simulations, $\mathcal R=\SI[per-mode=symbol]{5e5}{\mmHg\second\per\mL}$ was selected such that the haemodynamic parameters' distribution across the vasculature is similar to experimental data~\cite{DoblhoffDier2014,Riva1985}.
+For baseline simulations, $\mathcal R=\SI[per-mode=symbol]{1e6}{\mmHg\second\per\mL}$ was selected such that the haemodynamic parameters' distribution across the vasculature is similar to experimental data~\cite{DoblhoffDier2014,Riva1985}.
 
 \begin{table}
   \def\tabularxcolumn#1{m{#1}}
@@ -626,7 +624,7 @@ We derive \SI{95}{\percent} confidence intervals using bootstrapping ($N=1000$).
 \subsection{Sensitivity analysis}\label{sec:method-gsa}
 
 The method presented in this work relies on several hyperparameters.
-Those parameters are described in Table~\ref{tab:parameters} or in~\cite{Talou2021} for CCO-specific parameters.
+Those parameters are described in Section~\ref{sec:CCO} and Table~\ref{tab:parameters} and in more detail in~\cite{Talou2021} for CCO-specific parameters.
 The values for these parameters are either unknown (e.g., $N_{terms}$) or are subject to uncertainty in their measurement (e.g., $\delta$, $\gamma$).
 We performed a variance-based sensitivity analysis to decompose the variance in the model's output ($Var[Y]$).
 % For $d$ input parameters, the $Var[Y]$ is decomposed into fractions $V_u$ attributed to sets of inputs $X_u$ as:
@@ -664,11 +662,11 @@ Further details can be found in the Supplementary material.
 
 Uncertainty quantification aims at assessing the credibility of a model's prediction~\cite{ASME2018,Viceconti2021}.
 For the haemodynamics model, uncertainty stems from two parameters, namely OPP (Equation~(\ref{eq:OPP})) and $\mathcal R$.
-To quantify the uncertainty brought on the correlation coefficients, the same experiment was reproduced for $54$ different scenarios where:
+To quantify the uncertainty brought on the correlation coefficients, the same experiment was reproduced for $45$ different scenarios where:
 \begin{itemize}
-\item the resistance parameter $\mathcal R$ was set to \SI[per-mode=symbol]{1e5}{\mmHg\second\per\mL}, \SI[per-mode=symbol]{5e5}{\mmHg\second\per\mL} and \SI[per-mode=symbol]{1e6}{\mmHg\second\per\mL},
+\item the resistance parameter $\mathcal R$ was set to \SI[per-mode=symbol]{5e5}{\mmHg\second\per\mL}, \SI[per-mode=symbol]{1e6}{\mmHg\second\per\mL} and \SI[per-mode=symbol]{5e6}{\mmHg\second\per\mL},
 \item OPP was set to \SI{80}{\percent}, \SI{100}{\percent} and \SI{120}{\percent} of its baseline value,
-\item the fraction $\alpha$ (see Section~\ref{sec:microvasculature}) was varied between $0.1$ and $0.7$ by increments of $0.1$.
+\item the fraction $\alpha$ (see Section~\ref{sec:microvasculature}) was varied between $0.2$ and $0.6$ by increments of $0.1$.
 \end{itemize}
 
 \section{Results}\label{sec:results}
@@ -972,89 +970,5 @@ In future work, diverse virtual populations will be created to assess model pred
 This approach, complemented with haemodynamics and oxygen modelling takes an essential step towards understanding the significance of vascular imaging biomarkers and their relation to retinal diseases.
 
 \bibliography{bibliography}
-
-% \section{Supplementary material}
-%\newpage
-% \supplementarysection
-
-% \begin{table}[ht!]
-%   \centering
-% \resizebox{\textwidth}{!}{%
-% \begin{tabular}{llllll}
-%  &  & \multicolumn{2}{l}{Total retinal blood flow ($\mu L/min$)} & \multicolumn{2}{l}{Macular flow fraction (\%)} \\
-% $\mathcal R$  & OPP & mean & std  & mean & std \\
-%  & 80  & 17.9 & 7.3  & 3.2  & 1.0 \\
-%    & 100 & 22.4 & 9.1  & 3.2  & 1.0 \\
-%    & 120 & 26.9 & 11.0 & 3.2  & 1.0 \\
-%  & 80  & 15.3 & 5.9  & 4.5  & 1.2 \\
-%    & 100 & 19.1 & 7.3  & 4.5  & 1.2 \\
-%    & 120 & 23.0 & 8.8  & 4.5  & 1.2 \\
-%  & 80  & 14.0 & 5.2  & 5.5  & 1.3 \\
-%    & 100 & 17.5 & 6.5  & 5.5  & 1.3 \\
-%    & 120 & 20.9 & 7.8  & 5.5  & 1.3
-% \end{tabular}%
-% }
-%   \caption{\label{tab:sup-UQranges}Results of the 9 scenarios tested for uncertainty quantification.}
-% \end{table}
-
-
-% \begin{table}[ht!]
-% \centering
-% \resizebox{\textwidth}{!}{%
-%   \begin{tabular}{lllllll}
-%     \toprule
-%     Dependent variable    & \multicolumn{3}{l}{$\mathcal R$} & \multicolumn{3}{l}{OPP}\\
-%     \cmidrule(r){2-4} \cmidrule(l){5-7}\\
-%     Group                    & OPP = 80 & OPP = 100 & OPP = 120 & R = 500000 & R = 1000000 & R = 5000000 \\
-%     \cmidrule(r){2-4} \cmidrule(l){5-7}\\
-%     Total retinal blood flow & 0.88     & 0.89      & 0.87      & 0.98       & 0.98        & 0.95        \\
-%     macular flow fraction        & 0.89     & 0.89      & 0.88      & 0.00       & 0.00        & 0.00       \\
-%     \bottomrule
-% \end{tabular}%
-% }
-% \caption{\label{tab:sup-Pearsonr-UQ}Pearson's $R^2$ scores testing linear association between $\mathcal R$ and $OPP$ for the 9 scenarios tested during uncertainty quantification.}
-% \end{table}
-
-% \begin{figure}[ht!]
-%   \centering
-%   \includegraphics[width=.95\textwidth]{ParametersVP-To-TRBF}
-%   \caption{Association between retinal blood flow and population parameters. $\rho$ is the Spearman correlation coefficient.}
-%   \label{fig:sup-TRBF}
-% \end{figure}
-
-% \begin{figure}[ht!]
-%   \centering
-%   \includegraphics[width=.95\textwidth]{ParametersVP-To-MFR}
-%   \caption{Association between macular flow fraction and population parameters. $\rho$ is the Spearman correlation coefficient.}
-%   \label{fig:sup-MFR}
-% \end{figure}
-
-% \begin{figure}[ht!]
-%   \centering
-%   \includegraphics[width=\textwidth]{UQ_SpearmanCoefficients}
-%   \caption{\label{fig:sup-UQ-Coefficients}Effects of varying OPP and $\mathcal R$ on the associations between structural and haemodynamics outcomes.}
-% \end{figure}
-
-% \begin{figure}[ht!]
-
-%   \centering
-
-%   \begin{subfigure}[t]{.02\textwidth}
-%     \scalebox{1}{\adjustbox{valign=T}{\textbf{A}}}
-%   \end{subfigure}
-%   \begin{subfigure}[t]{.45\textwidth}
-%     \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{TRBF_vs_R_OPP}}}
-%   \end{subfigure}
-%   \hfill
-%   \begin{subfigure}[t]{.02\textwidth}
-%     \scalebox{1}{\adjustbox{valign=T}{\textbf{B}}}
-%   \end{subfigure}
-%   \begin{subfigure}[t]{.45\textwidth}
-%     \scalebox{1}{\adjustbox{valign=T}{\includegraphics[width=\textwidth]{Maculaflow_vs_R_OPP}}}
-%   \end{subfigure}
-%   \hfill
-  
-%   \caption{\label{fig:sup-UQ-TRBF-MFR-vs-R-OPP}Effects of varying OPP and $\mathcal R$ on the haemodynamics outcomes.}
-% \end{figure}
 
 \end{document}
